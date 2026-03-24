@@ -1,9 +1,21 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
 from app import models
 from app.routes import draws, stats, stats_v2
 
 app = FastAPI(title="Lottery API Clean")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://state-win-nexus.lovable.app",
+    ],
+    allow_origin_regex=r"https://.*\.lovable\.app",
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(draws.router)
 app.include_router(stats.router)
