@@ -11,6 +11,16 @@ from app.models import Draw, Game
 router = APIRouter(prefix="/draws", tags=["Draws"])
 
 
+MULTI_STATE_GAME_SLUGS = {
+    "powerball",
+    "powerball-double-play",
+    "mega-millions",
+    "millionaire-for-life",
+    "lotto-america",
+    "2by2",
+}
+
+
 def get_db() -> Session:
     db = SessionLocal()
     try:
@@ -39,6 +49,10 @@ def draw_to_dict(draw: Draw, game_slug: Optional[str] = None) -> dict:
         "bonus_number": draw.bonus_number,
         "multiplier": draw.multiplier,
         "jackpot": draw.jackpot,
+        "jackpot_change": getattr(draw, "jackpot_change", None),
+        "next_draw_text": getattr(draw, "next_draw_text", None),
+        "next_draw_timezone": getattr(draw, "next_draw_timezone", None),
+        "next_draw_relative": getattr(draw, "next_draw_relative", None),
         "cash_payout": draw.cash_payout,
         "secondary_draws": draw.secondary_draws,
         "notes": draw.notes,
@@ -64,7 +78,7 @@ def get_latest_draws(
 
         for game in games:
             if state:
-                if game.slug in {"powerball", "mega-millions", "millionaire-for-life", "lotto-america", "2by2"}:
+                if game.slug in MULTI_STATE_GAME_SLUGS:
                     pass
                 elif not game.slug.endswith(f"-{state.lower()}"):
                     continue
@@ -149,7 +163,7 @@ def get_draws_by_state(
 
         matched_games = []
         for game in games:
-            if game.slug.endswith(f"-{state_slug}"):
+            if game.slug.endswith(f"-{state_slug}") or game.slug in MULTI_STATE_GAME_SLUGS:
                 matched_games.append(game)
 
         if not matched_games:
@@ -233,7 +247,10 @@ def search_draws(
             stmt = stmt.where(Game.slug == game_slug.lower())
 
         if state:
-            stmt = stmt.where(Game.slug.like(f"%-{state.lower()}"))
+            state = state.lower()
+            stmt = stmt.where(
+                (Game.slug.like(f"%-{state}")) | (Game.slug.in_(MULTI_STATE_GAME_SLUGS))
+            )
 
         if draw_type:
             stmt = stmt.where(Draw.draw_type == draw_type)
