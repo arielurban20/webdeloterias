@@ -1,4 +1,5 @@
 import json
+import os
 import re
 from datetime import datetime
 
@@ -302,7 +303,6 @@ def extract_page_level_extras(full_page_text: str, title: str) -> dict:
         "next_draw_relative": None,
     }
 
-    # títulos conocidos para cortar el bloque antes del siguiente juego
     known_titles = [
         "Powerball Double Play",
         "Powerball",
@@ -337,8 +337,6 @@ def extract_page_level_extras(full_page_text: str, title: str) -> dict:
         "Loteria Tradicional",
     ]
 
-    # Buscar todas las ocurrencias del título y usar la que realmente pertenece
-    # al bloque del juego, no al encabezado descriptivo de la página.
     matches = list(re.finditer(re.escape(title_clean), page_text, re.IGNORECASE))
     if not matches:
         return data
@@ -349,8 +347,6 @@ def extract_page_level_extras(full_page_text: str, title: str) -> dict:
         start = match.start()
         tail = page_text[start:start + 1800]
 
-        # Este filtro obliga a que sea un bloque real del juego:
-        # debe contener fecha, Prizes/Odds o Speak, Past Results o Next Drawing.
         looks_like_game_block = (
             re.search(r"(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),\s+[A-Za-z]+\s+\d{1,2},\s+\d{4}", tail, re.IGNORECASE)
             or "Prizes/Odds" in tail
@@ -694,13 +690,13 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
 
         extras = extract_text_extras(section)
         page_extras = extract_page_level_extras(full_page_text, title)
-       
+
         if final_slug in {"mega-millions", "powerball", "powerball-double-play"}:
-         print("\nDEBUG EXTRAS")
-         print("STATE:", state["slug"])
-         print("TITLE:", title)
-         print("FINAL SLUG:", final_slug)
-         print("PAGE EXTRAS:", page_extras)
+            print("\nDEBUG EXTRAS")
+            print("STATE:", state["slug"])
+            print("TITLE:", title)
+            print("FINAL SLUG:", final_slug)
+            print("PAGE EXTRAS:", page_extras)
 
         bonus_number = extras["bonus_number"]
         multiplier = extras["multiplier"]
@@ -839,7 +835,13 @@ def main():
     report = []
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(channel="chrome", headless=False, slow_mo=20)
+        is_ci = os.getenv("CI", "").lower() == "true"
+
+        if is_ci:
+            browser = p.chromium.launch(headless=True)
+        else:
+            browser = p.chromium.launch(channel="chrome", headless=False, slow_mo=20)
+
         page = browser.new_page()
 
         for state in states:
