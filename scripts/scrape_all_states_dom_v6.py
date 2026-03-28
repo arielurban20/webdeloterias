@@ -2,6 +2,7 @@ import json
 import os
 import re
 from datetime import datetime
+from pathlib import Path
 from typing import Optional
 
 from playwright.sync_api import sync_playwright
@@ -344,7 +345,6 @@ def extract_primary_number_list(section, parser_type: str = "standard", final_sl
         if loc.count() == 0:
             continue
 
-        # importante: juntar todos los bloques, no devolver solo el primero
         all_nums = []
         for i in range(loc.count()):
             nums = _extract_numbers_from_node(loc.nth(i))
@@ -1057,10 +1057,98 @@ def get_or_create_game_in_db(
         db.close()
 
 
+def _ensure_debug_dir() -> Path:
+    debug_dir = Path("debug_ci")
+    debug_dir.mkdir(parents=True, exist_ok=True)
+    return debug_dir
+
+
+def _save_ci_debug_files(page, state_slug: str, full_page_text: str):
+    debug_dir = _ensure_debug_dir()
+
+    html_path = debug_dir / f"{state_slug}.html"
+    text_path = debug_dir / f"{state_slug}.txt"
+    png_path = debug_dir / f"{state_slug}.png"
+
+    try:
+        html_path.write_text(page.content(), encoding="utf-8")
+    except Exception:
+        pass
+
+    try:
+        text_path.write_text(full_page_text, encoding="utf-8")
+    except Exception:
+        pass
+
+    try:
+        page.screenshot(path=str(png_path), full_page=True)
+    except Exception:
+        pass
+
+
 def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
+    is_ci = os.getenv("CI", "").lower() == "true"
+
     page.goto(state["source_url"], wait_until="domcontentloaded", timeout=120000)
     page.wait_for_timeout(5000)
+
+    try:
+        page.mouse.wheel(0, 2500)
+        page.wait_for_timeout(1500)
+        page.mouse.wheel(0, -2500)
+        page.wait_for_timeout(1500)
+    except Exception:
+        pass
+
+    try:
+        page.wait_for_load_state("networkidle", timeout=15000)
+    except Exception:
+        pass
+
     full_page_text = clean(page.locator("body").inner_text())
+
+    page_title = ""
+    try:
+        page_title = page.title()
+    except Exception:
+        pass
+
+    section_count = 0
+    h2_count = 0
+    h3_count = 0
+    time_count = 0
+
+    try:
+        section_count = page.locator("section").count()
+    except Exception:
+        pass
+
+    try:
+        h2_count = page.locator("h2").count()
+    except Exception:
+        pass
+
+    try:
+        h3_count = page.locator("h3").count()
+    except Exception:
+        pass
+
+    try:
+        time_count = page.locator("time").count()
+    except Exception:
+        pass
+
+    print(f"PAGE TITLE: {page_title}")
+    print(f"BODY LENGTH: {len(full_page_text)}")
+    print(f"BODY PREVIEW: {full_page_text[:800]}")
+    print(f"SECTIONS FOUND: {section_count}")
+    print(f"H2 FOUND: {h2_count}")
+    print(f"H3 FOUND: {h3_count}")
+    print(f"TIME FOUND: {time_count}")
+
+    if is_ci and (section_count == 0 or h2_count == 0 or len(full_page_text) < 500):
+        print(f"CI DEBUG SAVE: state={state['slug']}")
+        _save_ci_debug_files(page, state["slug"], full_page_text)
 
     sections = page.locator("section")
     results = []
@@ -1207,7 +1295,7 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     continue
 
                 notes_parts = [
-                    "Scraped from Lottery Post DOM sections v6 multi-draw",
+                    "Scraped from Lottery Post DOM sections v7 multi-draw",
                     f"original_title={block_title}",
                     f"section_title={section_title}",
                     f"parser_type={parser_type}",
@@ -1267,6 +1355,10 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     "error": str(e),
                 })
 
+    if is_ci and len(results) == 0:
+        print(f"CI DEBUG EMPTY RESULTS: state={state['slug']}")
+        _save_ci_debug_files(page, state["slug"], full_page_text)
+
     return results
 
 
@@ -1285,11 +1377,22 @@ def main():
         is_ci = os.getenv("CI", "").lower() == "true"
 
         if is_ci:
-            browser = p.chromium.launch(headless=True)
+            browser = p.chromium.launch(
+                headless=True,
+                args=["--no-sandbox", "--disable-dev-shm-usage"],
+            )
         else:
             browser = p.chromium.launch(channel="chrome", headless=False, slow_mo=20)
 
-        page = browser.new_page()
+        page = browser.new_page(
+            viewport={"width": 1440, "height": 2400},
+            user_agent=(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/123.0.0.0 Safari/537.36"
+            ),
+            locale="en-US",
+        )
 
         for state in states:
             print("\n" + "=" * 90)
@@ -1339,7 +1442,7 @@ def main():
 
         browser.close()
 
-    with open("all_states_dom_report_v6.json", "w", encoding="utf-8") as f:
+    with open("all_states_dom_report_v7.json", "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
     print("\nSUMMARY")
@@ -1349,7 +1452,7 @@ def main():
     print(f"Updated draws: {updated}")
     print(f"Unmatched: {unmatched}")
     print(f"Invalid: {invalid}")
-    print("Report saved: all_states_dom_report_v6.json")
+    print("Report saved: all_states_dom_report_v7.json")
 
 
 if __name__ == "__main__":
