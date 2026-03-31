@@ -269,6 +269,20 @@ def canonical_game_info(original_title: str, state_code: Optional[str] = None) -
         canonical_slug = "pick-10"
         include_state_in_slug = True
 
+    # CASH GAMES
+    elif base_match == "cash 3":
+        canonical_name = "Cash 3"
+        canonical_slug = "cash-3"
+        include_state_in_slug = True
+    elif base_match == "cash 4":
+        canonical_name = "Cash 4"
+        canonical_slug = "cash-4"
+        include_state_in_slug = True
+    elif base_match == "cash 5":
+        canonical_name = "Cash 5"
+        canonical_slug = "cash-5"
+        include_state_in_slug = True
+
     # DAILY
     elif base_match == "daily 3":
         canonical_name = "Daily 3"
@@ -445,7 +459,7 @@ GAME_RULES_BY_FINAL_SLUG: Dict[str, Dict[str, Any]] = {
     "loto-cash-pr": {"main": 5, "bonus": 1},
     "revancha-pr": {"main": 5, "bonus": 1},
 
-    "colorado-lotto-plus-co": {"main": 6, "bonus": 1},
+    "colorado-lotto-plus-co": {"main": 6, "bonus": 0},
     "bank-a-million-va": {"main": 6, "bonus": 1},
     "wild-money-ri": {"main": 5, "bonus": 1},
     "bonus-match-5-md": {"main": 5, "bonus": 1},
@@ -481,31 +495,35 @@ GAME_RULES_BY_CANONICAL_SLUG: Dict[str, Dict[str, Any]] = {
 
     "2by2": {"main": 4, "bonus": 0},
 
-    "pick-2": {"main": 2, "bonus": 0},
-    "pick-3": {"main": 3, "bonus": 0},
-    "pick-4": {"main": 4, "bonus": 0},
-    "pick-5": {"main": 5, "bonus": 0},
+    "pick-2": {"main": 2, "bonus_mode": "optional"},
+    "pick-3": {"main": 3, "bonus_mode": "optional"},
+    "pick-4": {"main": 4, "bonus_mode": "optional"},
+    "pick-5": {"main": 5, "bonus_mode": "optional"},
     "pick-6": {"main": 6, "bonus": 0},
     "pick-10": {"main": 20, "bonus": 0},
 
-    "daily-3": {"main": 3, "bonus": 0},
-    "daily-4": {"main": 4, "bonus": 0},
+    "cash-3": {"main": 3, "bonus_mode": "optional"},
+    "cash-4": {"main": 4, "bonus_mode": "optional"},
+    "cash-5": {"main": 5, "bonus": 0},
+
+    "daily-3": {"main": 3, "bonus_mode": "optional"},
+    "daily-4": {"main": 4, "bonus_mode": "optional"},
     "daily-5": {"main": 5, "bonus": 0},
 
-    "play-3": {"main": 3, "bonus": 0},
-    "play-4": {"main": 4, "bonus": 0},
-    "play-5": {"main": 5, "bonus": 0},
+    "play-3": {"main": 3, "bonus_mode": "optional"},
+    "play-4": {"main": 4, "bonus_mode": "optional"},
+    "play-5": {"main": 5, "bonus_mode": "optional"},
 
-    "numbers": {"main": 3, "bonus": 0},
-    "numbers-game": {"main": 3, "bonus": 0},
-    "win-4": {"main": 4, "bonus": 0},
+    "numbers": {"main": 3, "bonus_mode": "optional"},
+    "numbers-game": {"main": 3, "bonus_mode": "optional"},
+    "win-4": {"main": 4, "bonus_mode": "optional"},
     "take-5": {"main": 5, "bonus": 0},
 
     "cash-pop": {"main": 1, "bonus": 0},
 
-    "pega-2": {"main": 2, "bonus": 0},
-    "pega-3": {"main": 3, "bonus": 0},
-    "pega-4": {"main": 4, "bonus": 0},
+    "pega-2": {"main": 2, "bonus_mode": "optional"},
+    "pega-3": {"main": 3, "bonus_mode": "optional"},
+    "pega-4": {"main": 4, "bonus_mode": "optional"},
 
     "fantasy-5": {"main": 5, "bonus": 0},
     "mass-cash": {"main": 5, "bonus": 0},
@@ -521,13 +539,79 @@ GAME_RULES_BY_CANONICAL_SLUG: Dict[str, Dict[str, Any]] = {
     "match-6": {"main": 6, "bonus": 0},
     "cash-5": {"main": 5, "bonus": 0},
     "rolling-cash-5": {"main": 5, "bonus": 0},
-    "jersey-cash-5": {"main": 5, "bonus": 1},
+    "jersey-cash-5": {"main": 5, "bonus": 0},
     "lotto-47": {"main": 6, "bonus": 0},
     "all-or-nothing": {"main": 12, "bonus": 0},
     "myday": {"main": 3, "bonus": 0},
     "daily-derby": {"main": 3, "bonus": 0},
     "poker-lotto": {"main": 5, "bonus": 0},
+    "colorado-lotto-plus": {"main": 6, "bonus": 0},
+    "bonus-match-5": {"main": 5, "bonus": 1},
+    "big-sky-bonus": {"main": 4, "bonus": 1},
+    "wild-money": {"main": 5, "bonus": 1},
+    "texas-two-step": {"main": 4, "bonus": 1},
 }
+
+GAME_SPECIAL_RULES_BY_FINAL_SLUG: Dict[str, Dict[str, Any]] = {
+    "pick-2-pa": {"extra_ball_label": "Wild Ball", "extra_ball_color": "purple"},
+    "pick-3-pa": {"extra_ball_label": "Wild Ball", "extra_ball_color": "purple"},
+    "pick-4-pa": {"extra_ball_label": "Wild Ball", "extra_ball_color": "purple"},
+    "pick-5-pa": {"extra_ball_label": "Wild Ball", "extra_ball_color": "purple"},
+
+    "fantasy-5-mi": {"has_double_play": True, "double_play_label": "Double Play"},
+
+    "pega-2-pr": {"extra_ball_label": "Wild Ball", "extra_ball_color": "red"},
+    "pega-3-pr": {"extra_ball_label": "Wild Ball", "extra_ball_color": "red"},
+    "pega-4-pr": {"extra_ball_label": "Wild Ball", "extra_ball_color": "red"},
+
+    "play-3-ct": {"extra_ball_label": "Wild Ball", "extra_ball_color": "purple"},
+    "play-4-ct": {"extra_ball_label": "Wild Ball", "extra_ball_color": "purple"},
+
+    "cash-3-ms": {"extra_ball_label": "Fireball", "extra_ball_color": "yellow"},
+    "cash-4-ms": {"extra_ball_label": "Fireball", "extra_ball_color": "yellow"},
+
+    "pick-3-sc": {"extra_ball_label": "Fireball", "extra_ball_color": "yellow"},
+    "pick-4-sc": {"extra_ball_label": "Fireball", "extra_ball_color": "yellow"},
+
+    "pick-3-mo": {"extra_ball_label": "Wild Ball", "extra_ball_color": "yellow"},
+    "pick-4-mo": {"extra_ball_label": "Wild Ball", "extra_ball_color": "yellow"},
+
+    "pick-2-fl": {"extra_ball_label": "Fireball", "extra_ball_color": "orange"},
+    "pick-3-fl": {"extra_ball_label": "Fireball", "extra_ball_color": "orange"},
+    "pick-4-fl": {"extra_ball_label": "Fireball", "extra_ball_color": "orange"},
+    "pick-5-fl": {"extra_ball_label": "Fireball", "extra_ball_color": "orange"},
+
+    "cash-3-tn": {"extra_ball_label": "Wild Ball", "extra_ball_color": "yellow"},
+    "cash-4-tn": {"extra_ball_label": "Wild Ball", "extra_ball_color": "yellow"},
+
+    "pick-3-tx": {"extra_ball_label": "Fireball", "extra_ball_color": "red"},
+    "daily-4-tx": {"extra_ball_label": "Fireball", "extra_ball_color": "red"},
+
+    "pick-3-id": {"extra_ball_label": "Sum It Up", "extra_ball_color": "blue"},
+    "pick-4-id": {"extra_ball_label": "Sum It Up", "extra_ball_color": "blue"},
+
+    "pick-3-il": {"extra_ball_label": "Fireball", "extra_ball_color": "orange"},
+    "pick-4-il": {"extra_ball_label": "Fireball", "extra_ball_color": "orange"},
+
+    "pick-3-nj": {"extra_ball_label": "Fireball", "extra_ball_color": "orange"},
+    "pick-4-nj": {"extra_ball_label": "Fireball", "extra_ball_color": "orange"},
+    "pick-6-nj": {"has_double_play": True, "double_play_label": "Double Play"},
+
+    "pick-3-va": {"extra_ball_label": "Fireball", "extra_ball_color": "red"},
+    "pick-4-va": {"extra_ball_label": "Fireball", "extra_ball_color": "red"},
+    "pick-5-va": {"extra_ball_label": "Fireball", "extra_ball_color": "red"},
+
+    "daily-3-in": {"extra_ball_label": "Superball", "extra_ball_color": "blue"},
+    "daily-4-in": {"extra_ball_label": "Superball", "extra_ball_color": "blue"},
+
+    "pick-3-nc": {"extra_ball_label": "Fireball", "extra_ball_color": "red"},
+    "pick-4-nc": {"extra_ball_label": "Fireball", "extra_ball_color": "red"},
+    "cash-5-nc": {"has_double_play": True, "double_play_label": "Double Play"},
+}
+
+
+def get_special_game_rule(game_slug: str) -> Dict[str, Any]:
+    return GAME_SPECIAL_RULES_BY_FINAL_SLUG.get(game_slug, {})
 
 
 def _safe_bonus_str(value: Optional[str]) -> Optional[str]:
@@ -535,12 +619,6 @@ def _safe_bonus_str(value: Optional[str]) -> Optional[str]:
         return None
     value = str(value).strip()
     return value if value else None
-
-
-def _bonus_already_in_raw(nums: List[int], bonus: Optional[str]) -> bool:
-    if not bonus or not bonus.isdigit():
-        return False
-    return nums and nums[-1] == int(bonus)
 
 
 def split_main_and_bonus(
@@ -552,10 +630,8 @@ def split_main_and_bonus(
     nums = [int(x) for x in (raw_numbers or []) if str(x).isdigit()]
     bonus = _safe_bonus_str(bonus_number)
 
-    # 1) buscar primero por slug final exacto
     rule = GAME_RULES_BY_FINAL_SLUG.get(game_slug)
 
-    # 2) fallback a canonical slug
     if not rule:
         canonical_guess = game_slug
         if "-" in game_slug:
@@ -564,7 +640,6 @@ def split_main_and_bonus(
                 canonical_guess = "-".join(parts[:-1])
         rule = GAME_RULES_BY_CANONICAL_SLUG.get(canonical_guess)
 
-    # 3) si no hay regla, devolver crudo
     if not rule:
         return {
             "main_numbers": nums,
@@ -573,9 +648,16 @@ def split_main_and_bonus(
         }
 
     main_count = rule.get("main", len(nums))
+    bonus_mode = rule.get("bonus_mode")
     bonus_count = rule.get("bonus", 0)
 
-    # juegos sin bonus
+    if bonus_mode == "optional":
+        return {
+            "main_numbers": nums[:main_count],
+            "bonus_number": bonus,
+            "multiplier": multiplier,
+        }
+
     if bonus_count == 0:
         return {
             "main_numbers": nums[:main_count],
@@ -583,7 +665,6 @@ def split_main_and_bonus(
             "multiplier": multiplier,
         }
 
-    # si vino bonus explícito por texto
     if bonus:
         return {
             "main_numbers": nums[:main_count],
@@ -591,7 +672,6 @@ def split_main_and_bonus(
             "multiplier": multiplier,
         }
 
-    # si no vino bonus explícito, derivarlo del array
     derived_bonus = None
     if len(nums) >= main_count + bonus_count:
         derived_bonus = str(nums[main_count])

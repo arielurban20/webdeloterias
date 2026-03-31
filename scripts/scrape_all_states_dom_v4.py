@@ -2,8 +2,6 @@ import json
 import os
 import re
 from datetime import datetime
-from pathlib import Path
-from typing import Optional
 
 from playwright.sync_api import sync_playwright
 from sqlalchemy import select, text
@@ -13,7 +11,6 @@ from app.models import Draw, Game
 from app.utils.game_normalizer import (
     canonical_game_info,
     split_main_and_bonus,
-    get_special_game_rule,
     GAME_RULES_BY_FINAL_SLUG,
     GAME_RULES_BY_CANONICAL_SLUG,
 )
@@ -48,12 +45,6 @@ DEBUG_SLUGS = {
     "pick-4-co",
     "pick-3-ar",
     "pick-4-ar",
-    "bonus-match-5-md",
-    "big-sky-bonus-mt",
-    "wild-money-ri",
-    "texas-two-step-tx",
-    "cash-3-tn",
-    "cash-4-tn",
 }
 
 
@@ -182,8 +173,13 @@ def _dedupe_blocks(blocks):
 
 
 def detect_draw_blocks(section):
+    """
+    Intenta detectar sub-bloques reales de sorteo sin cortar demasiado.
+    Si no encuentra bloques confiables, usa la section completa.
+    """
     blocks = []
 
+    # 1) intentar con ancestros de títulos internos tipo Midday/Evening/Day/Night
     marker_loc = section.locator("h3, h4, strong, b, .title, .gameTitle")
     marker_count = marker_loc.count()
 
@@ -215,6 +211,7 @@ def detect_draw_blocks(section):
         except Exception:
             pass
 
+    # 2) selectores candidatos de bloque completo
     candidate_selectors = [
         ":scope > div",
         "div.resultdraw",
@@ -249,6 +246,7 @@ def detect_draw_blocks(section):
 
             if temp:
                 blocks.extend(temp)
+                # si ya encontramos buenos bloques por un selector razonable, no sigas
                 if selector != ":scope > div" or len(temp) >= 2:
                     break
         except Exception:
@@ -348,14 +346,10 @@ def extract_primary_number_list(section, parser_type: str = "standard", final_sl
         if loc.count() == 0:
             continue
 
-        all_nums = []
         for i in range(loc.count()):
             nums = _extract_numbers_from_node(loc.nth(i))
             if nums:
-                all_nums.extend(nums)
-
-        if all_nums:
-            return all_nums
+                return nums
 
     return []
 
@@ -373,7 +367,7 @@ def _has_class_hint(node) -> bool:
         parent_class = ""
 
     combined = f"{own_class} {parent_class}"
-    return any(hint in combined for hint in ["num", "ball", "result", "draw", "card"])
+    return any(hint in combined for hint in ["num", "ball", "result", "draw"])
 
 
 def extract_numbers_for_block(
@@ -488,42 +482,6 @@ def extract_numbers_for_block(
     return nums
 
 
-def _extract_bonus_from_text(text_value: str) -> Optional[str]:
-    if not text_value:
-        return None
-
-    bonus_patterns = [
-        r"Cash Ball[:\s]+(\d{1,2})",
-        r"Star Ball[:\s]+(\d{1,2})",
-        r"Powerball[:\s]+(\d{1,2})",
-        r"Mega Ball[:\s]+(\d{1,2})",
-        r"Mega Number[:\s]+(\d{1,2})",
-        r"Millionaire Ball[:\s]+(\d{1,2})",
-        r"Bullseye[:\s]+(\d{1,2})",
-        r"Fireball[:\s]+(\d{1,2})",
-        r"Wild Ball[:\s]+(\d{1,2})",
-        r"Wild Money[:\s]+(\d{1,2})",
-        r"Superball[:\s]+(\d{1,2})",
-        r"Kicker[:\s]+(\d+)",
-        r"Cash Ball 225[:\s]+(\d{1,2})",
-        r"Bonus Ball[:\s]+(\d{1,2})",
-        r"Bonus Number[:\s]+(\d{1,2})",
-        r"Bonus[:\s]+(\d{1,2})",
-        r"Extra Ball[:\s]+(\d{1,2})",
-        r"Extra Number[:\s]+(\d{1,2})",
-        r"Extra[:\s]+(\d{1,2})",
-        r"Bolo Cash[:\s]+(\d{1,2})",
-        r"Megaball[:\s]+(\d{1,2})",
-    ]
-
-    for pattern in bonus_patterns:
-        m = re.search(pattern, text_value, re.IGNORECASE)
-        if m:
-            return m.group(1).strip()
-
-    return None
-
-
 def extract_text_extras(section) -> dict:
     def safe_text(locator) -> str:
         try:
@@ -552,16 +510,10 @@ def extract_text_extras(section) -> dict:
         safe_text(section.locator(".gameinfo")),
         safe_text(section.locator(".prize")),
         safe_text(section.locator(".panel")),
-        safe_text(section.locator("[class*='bonus']")),
-        safe_text(section.locator("[class*='ball']")),
-        safe_text(section.locator("[class*='extra']")),
-        safe_text(section.locator("ul.gold li")),
-        safe_text(section.locator("ul.gold")),
         safe_text(section.locator("p")),
         safe_text(section.locator("small")),
         safe_text(section.locator("strong")),
         safe_text(section.locator("span")),
-        safe_text(section.locator("td")),
     ]
 
     combined_text = " | ".join([full_text] + [x for x in extra_chunks if x])
@@ -578,18 +530,25 @@ def extract_text_extras(section) -> dict:
         "full_text": combined_text,
     }
 
-    data["bonus_number"] = _extract_bonus_from_text(combined_text)
-
-    if not data["bonus_number"]:
-        try:
-            gold_loc = section.locator("ul.gold li, ul.gold")
-            for i in range(gold_loc.count()):
-                txt = clean(gold_loc.nth(i).inner_text())
-                if re.fullmatch(r"\d{1,2}", txt):
-                    data["bonus_number"] = txt
-                    break
-        except Exception:
-            pass
+    bonus_patterns = [
+        r"Cash Ball[:\s]+(\d{1,2})",
+        r"Star Ball[:\s]+(\d{1,2})",
+        r"Powerball[:\s]+(\d{1,2})",
+        r"Mega Ball[:\s]+(\d{1,2})",
+        r"Mega Number[:\s]+(\d{1,2})",
+        r"Millionaire Ball[:\s]+(\d{1,2})",
+        r"Bullseye[:\s]+(\d{1,2})",
+        r"Fireball[:\s]+(\d{1,2})",
+        r"Wild Ball[:\s]+(\d{1,2})",
+        r"Wild Money[:\s]+(\d{1,2})",
+        r"Superball[:\s]+(\d{1,2})",
+        r"Kicker[:\s]+(\d+)",
+        r"Cash Ball 225[:\s]+(\d{1,2})",
+        r"Bonus Ball[:\s]+(\d{1,2})",
+        r"Bonus Number[:\s]+(\d{1,2})",
+        r"Bolo Cash[:\s]+(\d{1,2})",
+        r"Megaball[:\s]+(\d{1,2})",
+    ]
 
     mult_patterns = [
         r"All Star Bonus[:\s]+([Xx]?\d+)",
@@ -598,7 +557,6 @@ def extract_text_extras(section) -> dict:
         r"Multiplier[:\s]+([Xx]?\d+)",
         r"Plus[:\s]+([Xx]?\d+)",
         r"Multiplicador[:\s]+([Xx]?\d+)",
-        r"XTRA[:\s]+([Xx]?\d+)",
     ]
 
     jackpot_patterns = [
@@ -638,6 +596,12 @@ def extract_text_extras(section) -> dict:
         r"(in\s+\d+\s*(?:m|h|d))",
         r"(in\s+\d+\s+(?:minutes|hours|days))",
     ]
+
+    for pattern in bonus_patterns:
+        m = re.search(pattern, combined_text, re.IGNORECASE)
+        if m:
+            data["bonus_number"] = m.group(1).strip()
+            break
 
     for pattern in mult_patterns:
         m = re.search(pattern, combined_text, re.IGNORECASE)
@@ -689,7 +653,6 @@ def extract_page_level_extras(full_page_text: str, title: str) -> dict:
         "next_draw_text": None,
         "next_draw_timezone": None,
         "next_draw_relative": None,
-        "bonus_number": None,
     }
 
     known_titles = [
@@ -724,10 +687,6 @@ def extract_page_level_extras(full_page_text: str, title: str) -> dict:
         "Revancha",
         "Loto Cash",
         "Loteria Tradicional",
-        "Bonus Match 5",
-        "Wild Money",
-        "Big Sky Bonus",
-        "Texas Two Step",
     ]
 
     matches = list(re.finditer(re.escape(title_clean), page_text, re.IGNORECASE))
@@ -738,7 +697,7 @@ def extract_page_level_extras(full_page_text: str, title: str) -> dict:
 
     for match in matches:
         start = match.start()
-        tail = page_text[start:start + 2200]
+        tail = page_text[start:start + 1800]
 
         looks_like_game_block = (
             re.search(
@@ -750,10 +709,6 @@ def extract_page_level_extras(full_page_text: str, title: str) -> dict:
             or "Speak" in tail
             or "Past Results" in tail
             or "Next Drawing:" in tail
-            or "Bonus Ball" in tail
-            or "Bonus Number" in tail
-            or "Extra Ball" in tail
-            or "Extra:" in tail
         )
 
         if not looks_like_game_block:
@@ -769,18 +724,10 @@ def extract_page_level_extras(full_page_text: str, title: str) -> dict:
             if other_match and other_match.start() > 0:
                 next_positions.append(other_match.start())
 
-        end = min(next_positions) if next_positions else min(len(tail), 2200)
+        end = min(next_positions) if next_positions else min(len(tail), 1800)
         chunk = clean(tail[:end])
 
-        if (
-            "Next Drawing:" in chunk
-            or "Next Jackpot:" in chunk
-            or "Past Results" in chunk
-            or "Bonus Ball" in chunk
-            or "Bonus Number" in chunk
-            or "Extra Ball" in chunk
-            or "Extra:" in chunk
-        ):
+        if "Next Drawing:" in chunk or "Next Jackpot:" in chunk or "Past Results" in chunk:
             best_chunk = chunk
             break
 
@@ -791,7 +738,6 @@ def extract_page_level_extras(full_page_text: str, title: str) -> dict:
         return data
 
     chunk = best_chunk
-    data["bonus_number"] = _extract_bonus_from_text(chunk)
 
     next_draw_patterns = [
         r"Next Drawing:\s*([A-Za-z]{3},\s*[A-Za-z]{3}\s+\d{1,2},\s+\d{4},\s+\d{1,2}:\d{2}\s*(?:am|pm))",
@@ -863,9 +809,6 @@ def validate_entry(
     main_numbers: list[int],
     bonus_number=None,
 ) -> bool:
-    if final_slug == "poker-lotto-mi" or canonical_slug == "poker-lotto":
-        return False
-
     if not main_numbers:
         return False
 
@@ -1060,98 +1003,10 @@ def get_or_create_game_in_db(
         db.close()
 
 
-def _ensure_debug_dir() -> Path:
-    debug_dir = Path("debug_ci")
-    debug_dir.mkdir(parents=True, exist_ok=True)
-    return debug_dir
-
-
-def _save_ci_debug_files(page, state_slug: str, full_page_text: str):
-    debug_dir = _ensure_debug_dir()
-
-    html_path = debug_dir / f"{state_slug}.html"
-    text_path = debug_dir / f"{state_slug}.txt"
-    png_path = debug_dir / f"{state_slug}.png"
-
-    try:
-        html_path.write_text(page.content(), encoding="utf-8")
-    except Exception:
-        pass
-
-    try:
-        text_path.write_text(full_page_text, encoding="utf-8")
-    except Exception:
-        pass
-
-    try:
-        page.screenshot(path=str(png_path), full_page=True)
-    except Exception:
-        pass
-
-
 def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
-    is_ci = os.getenv("CI", "").lower() == "true"
-
     page.goto(state["source_url"], wait_until="domcontentloaded", timeout=120000)
     page.wait_for_timeout(5000)
-
-    try:
-        page.mouse.wheel(0, 2500)
-        page.wait_for_timeout(1500)
-        page.mouse.wheel(0, -2500)
-        page.wait_for_timeout(1500)
-    except Exception:
-        pass
-
-    try:
-        page.wait_for_load_state("networkidle", timeout=15000)
-    except Exception:
-        pass
-
     full_page_text = clean(page.locator("body").inner_text())
-
-    page_title = ""
-    try:
-        page_title = page.title()
-    except Exception:
-        pass
-
-    section_count = 0
-    h2_count = 0
-    h3_count = 0
-    time_count = 0
-
-    try:
-        section_count = page.locator("section").count()
-    except Exception:
-        pass
-
-    try:
-        h2_count = page.locator("h2").count()
-    except Exception:
-        pass
-
-    try:
-        h3_count = page.locator("h3").count()
-    except Exception:
-        pass
-
-    try:
-        time_count = page.locator("time").count()
-    except Exception:
-        pass
-
-    print(f"PAGE TITLE: {page_title}")
-    print(f"BODY LENGTH: {len(full_page_text)}")
-    print(f"BODY PREVIEW: {full_page_text[:800]}")
-    print(f"SECTIONS FOUND: {section_count}")
-    print(f"H2 FOUND: {h2_count}")
-    print(f"H3 FOUND: {h3_count}")
-    print(f"TIME FOUND: {time_count}")
-
-    if is_ci and (section_count == 0 or h2_count == 0 or len(full_page_text) < 500):
-        print(f"CI DEBUG SAVE: state={state['slug']}")
-        _save_ci_debug_files(page, state["slug"], full_page_text)
 
     sections = page.locator("section")
     results = []
@@ -1193,9 +1048,6 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                 final_slug = info["final_slug"]
                 parser_type = info["parser_type"]
 
-                if final_slug == "poker-lotto-mi" or canonical_slug == "poker-lotto":
-                    continue
-
                 block_text = clean(block.inner_text())
                 inferred_draw_type = detect_draw_type_from_text(block_title + " " + block_text)
                 draw_type = inferred_draw_type if inferred_draw_type else info["draw_type"]
@@ -1217,11 +1069,9 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     print("FINAL SLUG:", final_slug)
                     print("DRAW TYPE:", draw_type)
                     print("RAW NUMBERS:", raw_numbers)
-                    print("SECTION BONUS:", extras.get("bonus_number"))
-                    print("PAGE BONUS:", page_extras.get("bonus_number"))
                     print("PAGE EXTRAS:", page_extras)
 
-                bonus_number = extras["bonus_number"] or page_extras.get("bonus_number")
+                bonus_number = extras["bonus_number"]
                 multiplier = extras["multiplier"]
                 debug_text = extras["full_text"]
 
@@ -1242,12 +1092,6 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                 final_bonus_number = parts["bonus_number"]
                 final_multiplier = parts["multiplier"]
 
-                special_rule = get_special_game_rule(final_slug)
-                extra_ball_label = special_rule.get("extra_ball_label")
-                extra_ball_color = special_rule.get("extra_ball_color")
-                has_double_play = special_rule.get("has_double_play", False)
-                double_play_label = special_rule.get("double_play_label")
-
                 payload = {
                     "title": block_title,
                     "section_title": section_title,
@@ -1266,10 +1110,6 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     "next_draw_text": next_draw_text,
                     "next_draw_timezone": next_draw_timezone,
                     "next_draw_relative": next_draw_relative,
-                    "extra_ball_label": extra_ball_label,
-                    "extra_ball_color": extra_ball_color,
-                    "has_double_play": has_double_play,
-                    "double_play_label": double_play_label,
                     "debug_text": debug_text[:2000],
                 }
 
@@ -1308,25 +1148,13 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     continue
 
                 notes_parts = [
-                    "Scraped from Lottery Post DOM sections v6 multi-draw",
+                    "Scraped from Lottery Post DOM sections v4 multi-draw",
                     f"original_title={block_title}",
                     f"section_title={section_title}",
                     f"parser_type={parser_type}",
                     f"canonical_slug={canonical_slug}",
                     f"draw_type={draw_type}",
                 ]
-
-                if extra_ball_label:
-                    notes_parts.append(f"extra_ball_label={extra_ball_label}")
-
-                if extra_ball_color:
-                    notes_parts.append(f"extra_ball_color={extra_ball_color}")
-
-                if has_double_play:
-                    notes_parts.append("has_double_play=true")
-
-                if double_play_label:
-                    notes_parts.append(f"double_play_label={double_play_label}")
 
                 if parser_type in {"special", "many-numbers", "2by2"}:
                     notes_parts.append(f"raw_numbers={raw_numbers}")
@@ -1364,10 +1192,6 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     "next_draw_text": next_draw_text,
                     "next_draw_timezone": next_draw_timezone,
                     "next_draw_relative": next_draw_relative,
-                    "extra_ball_label": extra_ball_label,
-                    "extra_ball_color": extra_ball_color,
-                    "has_double_play": has_double_play,
-                    "double_play_label": double_play_label,
                 }
 
                 if created_game:
@@ -1383,10 +1207,6 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     "draw_date": None,
                     "error": str(e),
                 })
-
-    if is_ci and len(results) == 0:
-        print(f"CI DEBUG EMPTY RESULTS: state={state['slug']}")
-        _save_ci_debug_files(page, state["slug"], full_page_text)
 
     return results
 
@@ -1406,22 +1226,11 @@ def main():
         is_ci = os.getenv("CI", "").lower() == "true"
 
         if is_ci:
-            browser = p.chromium.launch(
-                headless=True,
-                args=["--no-sandbox", "--disable-dev-shm-usage"],
-            )
+            browser = p.chromium.launch(headless=True)
         else:
             browser = p.chromium.launch(channel="chrome", headless=False, slow_mo=20)
 
-        page = browser.new_page(
-            viewport={"width": 1440, "height": 2400},
-            user_agent=(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/123.0.0.0 Safari/537.36"
-            ),
-            locale="en-US",
-        )
+        page = browser.new_page()
 
         for state in states:
             print("\n" + "=" * 90)
@@ -1471,7 +1280,7 @@ def main():
 
         browser.close()
 
-    with open("all_states_dom_report_v6.json", "w", encoding="utf-8") as f:
+    with open("all_states_dom_report_v4.json", "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
     print("\nSUMMARY")
@@ -1481,7 +1290,7 @@ def main():
     print(f"Updated draws: {updated}")
     print(f"Unmatched: {unmatched}")
     print(f"Invalid: {invalid}")
-    print("Report saved: all_states_dom_report_v6.json")
+    print("Report saved: all_states_dom_report_v4.json")
 
 
 if __name__ == "__main__":
