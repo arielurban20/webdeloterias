@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, Boolean, Date, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, Date, Text, DateTime, Float, ForeignKey
 from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.sql import func
 from app.database import Base
 
 
@@ -84,3 +85,11 @@ class Draw(Base):
     next_draw_text = Column(Text, nullable=True)
     next_draw_timezone = Column(String, nullable=True)
     next_draw_relative = Column(String, nullable=True)
+
+    source_provider = Column(String, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=True)
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now(), nullable=True)
+    verification_status = Column(String, nullable=True, default="pending")
+    confidence_score = Column(Float, nullable=True)
+    needs_review = Column(Boolean, nullable=True, default=False)
+    raw_payload = Column(JSONB, nullable=True)
