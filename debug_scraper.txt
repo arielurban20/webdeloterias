@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "C:\Users\ariel\lottery_api_clean\scripts\scrape_all_states_dom_v6.py", line 11, in <module>
+    from app.database import SessionLocal
+ModuleNotFoundError: No module named 'app'

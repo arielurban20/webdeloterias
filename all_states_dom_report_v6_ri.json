@@ -1,0 +1,160 @@
+[
+  {
+    "state": "ri",
+    "state_name": "Rhode Island",
+    "rows": [
+      {
+        "status": "updated",
+        "title": "Numbers Game Midday",
+        "resolved_slug": "numbers-game-ri",
+        "draw_date": "2026-04-11",
+        "draw_type": "midday",
+        "main_numbers": [
+          4,
+          1,
+          0
+        ],
+        "secondary_draws": null,
+        "bonus_number": null,
+        "multiplier": null,
+        "jackpot": null,
+        "jackpot_change": null,
+        "next_draw_text": "Sun, Apr 12, 2026, 1:30 pm",
+        "next_draw_timezone": "Eastern Time (GMT-5:00)",
+        "next_draw_relative": "21 hours from now",
+        "extra_ball_label": null,
+        "extra_ball_color": null,
+        "has_double_play": false,
+        "double_play_label": null
+      },
+      {
+        "status": "updated",
+        "title": "Numbers Game Evening",
+        "resolved_slug": "numbers-game-ri",
+        "draw_date": "2026-04-10",
+        "draw_type": "evening",
+        "main_numbers": [
+          3,
+          1,
+          6
+        ],
+        "secondary_draws": null,
+        "bonus_number": null,
+        "multiplier": null,
+        "jackpot": null,
+        "jackpot_change": null,
+        "next_draw_text": "Sat, Apr 11, 2026, 6:59 pm",
+        "next_draw_timezone": "Eastern Time (GMT-5:00)",
+        "next_draw_relative": "2 hours from now",
+        "extra_ball_label": null,
+        "extra_ball_color": null,
+        "has_double_play": false,
+        "double_play_label": null
+      },
+      {
+        "status": "updated",
+        "title": "Wild Money",
+        "resolved_slug": "wild-money-ri",
+        "draw_date": "2026-04-10",
+        "draw_type": "main",
+        "main_numbers": [
+          1,
+          6,
+          20,
+          30,
+          35
+        ],
+        "secondary_draws": null,
+        "bonus_number": "3",
+        "multiplier": "X3",
+        "jackpot": "$34,000",
+        "jackpot_change": "$2,000",
+        "next_draw_text": "Sat, Apr 11, 2026, 7:29 pm",
+        "next_draw_timezone": "Eastern Time (GMT-5:00)",
+        "next_draw_relative": "3 hours from now",
+        "extra_ball_label": null,
+        "extra_ball_color": null,
+        "has_double_play": false,
+        "double_play_label": null
+      },
+      {
+        "status": "updated",
+        "title": "Millionaire for Life",
+        "resolved_slug": "millionaire-for-life",
+        "draw_date": "2026-04-10",
+        "draw_type": "main",
+        "main_numbers": [
+          13,
+          20,
+          26,
+          32,
+          54
+        ],
+        "secondary_draws": null,
+        "bonus_number": "1",
+        "multiplier": null,
+        "jackpot": null,
+        "jackpot_change": null,
+        "next_draw_text": "Sat, Apr 11, 2026, 11:15 pm",
+        "next_draw_timezone": "Eastern Time (GMT-5:00)",
+        "next_draw_relative": "6 hours from now",
+        "extra_ball_label": null,
+        "extra_ball_color": null,
+        "has_double_play": false,
+        "double_play_label": null
+      },
+      {
+        "status": "updated",
+        "title": "Mega Millions",
+        "resolved_slug": "mega-millions",
+        "draw_date": "2026-04-10",
+        "draw_type": "main",
+        "main_numbers": [
+          3,
+          18,
+          36,
+          42,
+          49
+        ],
+        "secondary_draws": null,
+        "bonus_number": "6",
+        "multiplier": null,
+        "jackpot": "$120 Million",
+        "jackpot_change": "$10 Million",
+        "next_draw_text": "Tue, Apr 14, 2026, 11:00 pm",
+        "next_draw_timezone": "Eastern Time (GMT-5:00)",
+        "next_draw_relative": "3 days from now",
+        "extra_ball_label": null,
+        "extra_ball_color": null,
+        "has_double_play": false,
+        "double_play_label": null
+      },
+      {
+        "status": "updated",
+        "title": "Powerball",
+        "resolved_slug": "powerball",
+        "draw_date": "2026-04-08",
+        "draw_type": "main",
+        "main_numbers": [
+          3,
+          16,
+          17,
+          42,
+          52
+        ],
+        "secondary_draws": null,
+        "bonus_number": "3",
+        "multiplier": "X2",
+        "jackpot": "$35 Million",
+        "jackpot_change": "$15 Million",
+        "next_draw_text": "Sat, Apr 11, 2026, 10:59 pm",
+        "next_draw_timezone": "Eastern Time (GMT-5:00)",
+        "next_draw_relative": "6 hours from now",
+        "extra_ball_label": null,
+        "extra_ball_color": null,
+        "has_double_play": false,
+        "double_play_label": null
+      }
+    ]
+  }
+]

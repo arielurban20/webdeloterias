@@ -1,0 +1,1779 @@
+{
+  "pick-3-az": {
+    "timezone": "America/Phoenix",
+    "state": "az",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:00" }
+    ]
+  },
+  "fantasy-5-az": {
+    "timezone": "America/Phoenix",
+    "state": "az",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:00" }
+    ]
+  },
+  "the-pick-az": {
+    "timezone": "America/Phoenix",
+    "state": "az",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "19:00" }
+    ]
+  },
+  "triple-twist-az": {
+    "timezone": "America/Phoenix",
+    "state": "az",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:00" }
+    ]
+  },
+
+  "pick-3-md": {
+    "timezone": "America/New_York",
+    "state": "md",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:28" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:56" }
+    ]
+  },
+  "pick-4-md": {
+    "timezone": "America/New_York",
+    "state": "md",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:28" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:56" }
+    ]
+  },
+  "pick-5-md": {
+    "timezone": "America/New_York",
+    "state": "md",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:28" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:56" }
+    ]
+  },
+  "cash-pop-md": {
+    "timezone": "America/New_York",
+    "state": "md",
+    "draws": [
+      { "draw_type": "9am", "days": [0, 1, 2, 3, 4, 5, 6], "time": "09:00" },
+      { "draw_type": "1pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:00" },
+      { "draw_type": "6pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:00" },
+      { "draw_type": "11pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "bonus-match-5-md": {
+    "timezone": "America/New_York",
+    "state": "md",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:51" }
+    ]
+  },
+  "multi-match-md": {
+    "timezone": "America/New_York",
+    "state": "md",
+    "draws": [
+      { "draw_type": "main", "days": [1, 4], "time": "19:56" }
+    ]
+  },
+
+  "pick-4-or": {
+    "timezone": "America/Los_Angeles",
+    "state": "or",
+    "draws": [
+      { "draw_type": "1pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:00" },
+      { "draw_type": "4pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "16:00" },
+      { "draw_type": "7pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:00" },
+      { "draw_type": "10pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:00" }
+    ]
+  },
+  "win-for-life-or": {
+    "timezone": "America/Los_Angeles",
+    "state": "or",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "19:30" }
+    ]
+  },
+  "megabucks-or": {
+    "timezone": "America/Los_Angeles",
+    "state": "or",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "19:29" }
+    ]
+  },
+
+  "cash-3-ar": {
+    "timezone": "America/Chicago",
+    "state": "ar",
+    "draws": [
+      { "draw_type": "midday", "days": [1, 2, 3, 4, 5, 6], "time": "12:59" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "cash-4-ar": {
+    "timezone": "America/Chicago",
+    "state": "ar",
+    "draws": [
+      { "draw_type": "midday", "days": [1, 2, 3, 4, 5, 6], "time": "12:59" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "natural-state-jackpot-ar": {
+    "timezone": "America/Chicago",
+    "state": "ar",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:00" }
+    ]
+  },
+  "lotto-ar": {
+    "timezone": "America/Chicago",
+    "state": "ar",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "21:00" }
+    ]
+  },
+  "millionaire-for-life-ar": {
+    "timezone": "America/Chicago",
+    "state": "ar",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:15" }
+    ]
+  },
+
+  "numbers-game-ma": {
+    "timezone": "America/New_York",
+    "state": "ma",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:00" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "mass-cash-ma": {
+    "timezone": "America/New_York",
+    "state": "ma",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:00" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "megabucks-ma": {
+    "timezone": "America/New_York",
+    "state": "ma",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "21:00" }
+    ]
+  },
+  "millionaire-for-life-ma": {
+    "timezone": "America/New_York",
+    "state": "ma",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pick-2-pa": {
+    "timezone": "America/New_York",
+    "state": "pa",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:35" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "pick-3-pa": {
+    "timezone": "America/New_York",
+    "state": "pa",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:35" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "pick-4-pa": {
+    "timezone": "America/New_York",
+    "state": "pa",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:35" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "pick-5-pa": {
+    "timezone": "America/New_York",
+    "state": "pa",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:35" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "cash-pop-pa": {
+    "timezone": "America/New_York",
+    "state": "pa",
+    "draws": [
+      { "draw_type": "morning-buzz", "days": [0, 1, 2, 3, 4, 5, 6], "time": "09:00" },
+      { "draw_type": "lunch-break", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:35" },
+      { "draw_type": "prime-time", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" },
+      { "draw_type": "night-owl", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "treasure-hunt-pa": {
+    "timezone": "America/New_York",
+    "state": "pa",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:35" }
+    ]
+  },
+  "cash-5-pa": {
+    "timezone": "America/New_York",
+    "state": "pa",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "match-6-pa": {
+    "timezone": "America/New_York",
+    "state": "pa",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "millionaire-for-life-pa": {
+    "timezone": "America/New_York",
+    "state": "pa",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "daily-3-ca": {
+    "timezone": "America/Los_Angeles",
+    "state": "ca",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:00" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:30" }
+    ]
+  },
+  "daily-4-ca": {
+    "timezone": "America/Los_Angeles",
+    "state": "ca",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:30" }
+    ]
+  },
+  "fantasy-5-ca": {
+    "timezone": "America/Los_Angeles",
+    "state": "ca",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:30" }
+    ]
+  },
+  "superlotto-plus-ca": {
+    "timezone": "America/Los_Angeles",
+    "state": "ca",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "19:57" }
+    ]
+  },
+  "daily-derby-ca": {
+    "timezone": "America/Los_Angeles",
+    "state": "ca",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:30" }
+    ]
+  },
+
+  "daily-3-mi": {
+    "timezone": "America/New_York",
+    "state": "mi",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:59" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:29" }
+    ]
+  },
+  "daily-4-mi": {
+    "timezone": "America/New_York",
+    "state": "mi",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:59" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:29" }
+    ]
+  },
+  "fantasy-5-mi": {
+    "timezone": "America/New_York",
+    "state": "mi",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:29" }
+    ]
+  },
+  "lotto-47-mi": {
+    "timezone": "America/New_York",
+    "state": "mi",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "19:29" }
+    ]
+  },
+  "keno-mi": {
+    "timezone": "America/New_York",
+    "state": "mi",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:29" }
+    ]
+  },
+  "millionaire-for-life-mi": {
+    "timezone": "America/New_York",
+    "state": "mi",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pega-2-pr": {
+    "timezone": "America/Puerto_Rico",
+    "state": "pr",
+    "draws": [
+      { "draw_type": "day", "days": [1, 2, 3, 4, 5, 6], "time": "14:00" },
+      { "draw_type": "night", "days": [1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "pega-3-pr": {
+    "timezone": "America/Puerto_Rico",
+    "state": "pr",
+    "draws": [
+      { "draw_type": "day", "days": [1, 2, 3, 4, 5, 6], "time": "14:00" },
+      { "draw_type": "night", "days": [1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "pega-4-pr": {
+    "timezone": "America/Puerto_Rico",
+    "state": "pr",
+    "draws": [
+      { "draw_type": "day", "days": [1, 2, 3, 4, 5, 6], "time": "14:00" },
+      { "draw_type": "night", "days": [1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "loto-cash-pr": {
+    "timezone": "America/Puerto_Rico",
+    "state": "pr",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 5], "time": "21:00" }
+    ]
+  },
+  "revancha-pr": {
+    "timezone": "America/Puerto_Rico",
+    "state": "pr",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 5], "time": "21:00" }
+    ]
+  },
+
+  "pick-3-co": {
+    "timezone": "America/Denver",
+    "state": "co",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:30" }
+    ]
+  },
+  "cash-5-co": {
+    "timezone": "America/Denver",
+    "state": "co",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:35" }
+    ]
+  },
+  "colorado-lotto-plus-co": {
+    "timezone": "America/Denver",
+    "state": "co",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "19:36" }
+    ]
+  },
+  "millionaire-for-life-co": {
+    "timezone": "America/Denver",
+    "state": "co",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:15" }
+    ]
+  },
+
+  "pick-3-mn": {
+    "timezone": "America/Chicago",
+    "state": "mn",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:17" }
+    ]
+  },
+  "north-5-mn": {
+    "timezone": "America/Chicago",
+    "state": "mn",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:17" }
+    ]
+  },
+  "gopher-5-mn": {
+    "timezone": "America/Chicago",
+    "state": "mn",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 5], "time": "18:17" }
+    ]
+  },
+
+  "numbers-game-ri": {
+    "timezone": "America/New_York",
+    "state": "ri",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "wild-money-ri": {
+    "timezone": "America/New_York",
+    "state": "ri",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:29" }
+    ]
+  },
+  "millionaire-for-life-ri": {
+    "timezone": "America/New_York",
+    "state": "ri",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "play-3-ct": {
+    "timezone": "America/New_York",
+    "state": "ct",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:57" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:29" }
+    ]
+  },
+  "play-4-ct": {
+    "timezone": "America/New_York",
+    "state": "ct",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:57" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:29" }
+    ]
+  },
+  "cash-5-ct": {
+    "timezone": "America/New_York",
+    "state": "ct",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:29" }
+    ]
+  },
+  "lotto-ct": {
+    "timezone": "America/New_York",
+    "state": "ct",
+    "draws": [
+      { "draw_type": "main", "days": [2, 5], "time": "22:38" }
+    ]
+  },
+  "millionaire-for-life-ct": {
+    "timezone": "America/New_York",
+    "state": "ct",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "cash-3-ms": {
+    "timezone": "America/Chicago",
+    "state": "ms",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:30" }
+    ]
+  },
+  "cash-4-ms": {
+    "timezone": "America/Chicago",
+    "state": "ms",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:30" }
+    ]
+  },
+  "cash-pop-ms": {
+    "timezone": "America/Chicago",
+    "state": "ms",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:30" }
+    ]
+  },
+  "match-5-ms": {
+    "timezone": "America/Chicago",
+    "state": "ms",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:30" }
+    ]
+  },
+  "millionaire-for-life-ms": {
+    "timezone": "America/Chicago",
+    "state": "ms",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:15" }
+    ]
+  },
+
+  "pick-3-sc": {
+    "timezone": "America/New_York",
+    "state": "sc",
+    "draws": [
+      { "draw_type": "midday", "days": [1, 2, 3, 4, 5, 6], "time": "12:59" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "pick-4-sc": {
+    "timezone": "America/New_York",
+    "state": "sc",
+    "draws": [
+      { "draw_type": "midday", "days": [1, 2, 3, 4, 5, 6], "time": "12:59" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "cash-pop-sc": {
+    "timezone": "America/New_York",
+    "state": "sc",
+    "draws": [
+      { "draw_type": "midday", "days": [1, 2, 3, 4, 5, 6], "time": "12:59" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "palmetto-cash-5-sc": {
+    "timezone": "America/New_York",
+    "state": "sc",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+
+  "play-3-de": {
+    "timezone": "America/New_York",
+    "state": "de",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:58" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:57" }
+    ]
+  },
+  "play-4-de": {
+    "timezone": "America/New_York",
+    "state": "de",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:58" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:57" }
+    ]
+  },
+  "play-5-de": {
+    "timezone": "America/New_York",
+    "state": "de",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:58" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:57" }
+    ]
+  },
+  "multi-win-lotto-de": {
+    "timezone": "America/New_York",
+    "state": "de",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:57" }
+    ]
+  },
+
+  "pick-3-mo": {
+    "timezone": "America/Chicago",
+    "state": "mo",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:45" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:59" }
+    ]
+  },
+  "pick-4-mo": {
+    "timezone": "America/Chicago",
+    "state": "mo",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:45" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:59" }
+    ]
+  },
+  "cash-pop-mo": {
+    "timezone": "America/Chicago",
+    "state": "mo",
+    "draws": [
+      { "draw_type": "early-bird", "days": [0, 1, 2, 3, 4, 5, 6], "time": "08:00" },
+      { "draw_type": "late-morning", "days": [0, 1, 2, 3, 4, 5, 6], "time": "11:00" },
+      { "draw_type": "matinee", "days": [0, 1, 2, 3, 4, 5, 6], "time": "15:00" },
+      { "draw_type": "prime-time", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:00" },
+      { "draw_type": "night-owl", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "show-me-cash-mo": {
+    "timezone": "America/Chicago",
+    "state": "mo",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:59" }
+    ]
+  },
+  "mo-millions-mo": {
+    "timezone": "America/Chicago",
+    "state": "mo",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "20:59" }
+    ]
+  },
+
+  "dakota-cash-sd": {
+    "timezone": "America/Chicago",
+    "state": "sd",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "21:00" }
+    ]
+  },
+  "millionaire-for-life-sd": {
+    "timezone": "America/Chicago",
+    "state": "sd",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:15" }
+    ]
+  },
+
+  "pick-2-fl": {
+    "timezone": "America/New_York",
+    "state": "fl",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:45" }
+    ]
+  },
+  "pick-3-fl": {
+    "timezone": "America/New_York",
+    "state": "fl",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:45" }
+    ]
+  },
+  "pick-4-fl": {
+    "timezone": "America/New_York",
+    "state": "fl",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:45" }
+    ]
+  },
+  "pick-5-fl": {
+    "timezone": "America/New_York",
+    "state": "fl",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:45" }
+    ]
+  },
+  "cash-pop-fl": {
+    "timezone": "America/New_York",
+    "state": "fl",
+    "draws": [
+      { "draw_type": "morning", "days": [0, 1, 2, 3, 4, 5, 6], "time": "08:45" },
+      { "draw_type": "matinee", "days": [0, 1, 2, 3, 4, 5, 6], "time": "11:45" },
+      { "draw_type": "afternoon", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:45" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:45" },
+      { "draw_type": "late-night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:45" }
+    ]
+  },
+  "fantasy-5-fl": {
+    "timezone": "America/New_York",
+    "state": "fl",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:05" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+  "lotto-fl": {
+    "timezone": "America/New_York",
+    "state": "fl",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "23:00" }
+    ]
+  },
+  "jackpot-triple-play-fl": {
+    "timezone": "America/New_York",
+    "state": "fl",
+    "draws": [
+      { "draw_type": "main", "days": [2, 5], "time": "23:15" }
+    ]
+  },
+
+  "big-sky-bonus-mt": {
+    "timezone": "America/Denver",
+    "state": "mt",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:30" }
+    ]
+  },
+  "montana-cash-mt": {
+    "timezone": "America/Denver",
+    "state": "mt",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "20:00" }
+    ]
+  },
+  "millionaire-for-life-mt": {
+    "timezone": "America/Denver",
+    "state": "mt",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:15" }
+    ]
+  },
+
+  "cash-3-tn": {
+    "timezone": "America/Chicago",
+    "state": "tn",
+    "draws": [
+      { "draw_type": "morning", "days": [1, 2, 3, 4, 5, 6], "time": "09:28" },
+      { "draw_type": "midday", "days": [1, 2, 3, 4, 5, 6], "time": "12:28" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:28" }
+    ]
+  },
+  "cash-4-tn": {
+    "timezone": "America/Chicago",
+    "state": "tn",
+    "draws": [
+      { "draw_type": "morning", "days": [1, 2, 3, 4, 5, 6], "time": "09:28" },
+      { "draw_type": "midday", "days": [1, 2, 3, 4, 5, 6], "time": "12:28" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:28" }
+    ]
+  },
+  "daily-tennessee-jackpot-tn": {
+    "timezone": "America/Chicago",
+    "state": "tn",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "tennessee-cash-tn": {
+    "timezone": "America/Chicago",
+    "state": "tn",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 5], "time": "22:30" }
+    ]
+  },
+  "millionaire-for-life-tn": {
+    "timezone": "America/Chicago",
+    "state": "tn",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:15" }
+    ]
+  },
+
+  "cash-3-ga": {
+    "timezone": "America/New_York",
+    "state": "ga",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:29" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:34" }
+    ]
+  },
+  "cash-4-ga": {
+    "timezone": "America/New_York",
+    "state": "ga",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:29" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:34" }
+    ]
+  },
+  "georgia-five-ga": {
+    "timezone": "America/New_York",
+    "state": "ga",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:29" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "cash-pop-ga": {
+    "timezone": "America/New_York",
+    "state": "ga",
+    "draws": [
+      { "draw_type": "early-bird", "days": [0, 1, 2, 3, 4, 5, 6], "time": "08:00" },
+      { "draw_type": "matinee", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:00" },
+      { "draw_type": "drive-time", "days": [0, 1, 2, 3, 4, 5, 6], "time": "17:00" },
+      { "draw_type": "primetime", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:00" },
+      { "draw_type": "night-owl", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:59" }
+    ]
+  },
+  "fantasy-5-ga": {
+    "timezone": "America/New_York",
+    "state": "ga",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:34" }
+    ]
+  },
+  "millionaire-for-life-ga": {
+    "timezone": "America/New_York",
+    "state": "ga",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pick-3-ne": {
+    "timezone": "America/Chicago",
+    "state": "ne",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "pick-4-ne": {
+    "timezone": "America/Chicago",
+    "state": "ne",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "pick-5-ne": {
+    "timezone": "America/Chicago",
+    "state": "ne",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "2by2": {
+    "timezone": "America/Chicago",
+    "state": "multi",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:30" }
+    ]
+  },
+  "myday-ne": {
+    "timezone": "America/Chicago",
+    "state": "ne",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+
+  "pick-3-tx": {
+    "timezone": "America/Chicago",
+    "state": "tx",
+    "draws": [
+      { "draw_type": "morning", "days": [1, 2, 3, 4, 5, 6], "time": "10:00" },
+      { "draw_type": "day", "days": [1, 2, 3, 4, 5, 6], "time": "12:27" },
+      { "draw_type": "evening", "days": [1, 2, 3, 4, 5, 6], "time": "18:00" },
+      { "draw_type": "night", "days": [1, 2, 3, 4, 5, 6], "time": "22:12" }
+    ]
+  },
+  "daily-4-tx": {
+    "timezone": "America/Chicago",
+    "state": "tx",
+    "draws": [
+      { "draw_type": "morning", "days": [1, 2, 3, 4, 5, 6], "time": "10:00" },
+      { "draw_type": "day", "days": [1, 2, 3, 4, 5, 6], "time": "12:27" },
+      { "draw_type": "evening", "days": [1, 2, 3, 4, 5, 6], "time": "18:00" },
+      { "draw_type": "night", "days": [1, 2, 3, 4, 5, 6], "time": "22:12" }
+    ]
+  },
+  "cash-5-tx": {
+    "timezone": "America/Chicago",
+    "state": "tx",
+    "draws": [
+      { "draw_type": "main", "days": [1, 2, 3, 4, 5, 6], "time": "22:12" }
+    ]
+  },
+  "lotto-texas-tx": {
+    "timezone": "America/Chicago",
+    "state": "tx",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "22:12" }
+    ]
+  },
+  "texas-two-step-tx": {
+    "timezone": "America/Chicago",
+    "state": "tx",
+    "draws": [
+      { "draw_type": "main", "days": [1, 4], "time": "22:12" }
+    ]
+  },
+  "all-or-nothing-tx": {
+    "timezone": "America/Chicago",
+    "state": "tx",
+    "draws": [
+      { "draw_type": "morning", "days": [1, 2, 3, 4, 5, 6], "time": "10:00" },
+      { "draw_type": "day", "days": [1, 2, 3, 4, 5, 6], "time": "12:27" },
+      { "draw_type": "evening", "days": [1, 2, 3, 4, 5, 6], "time": "18:00" },
+      { "draw_type": "night", "days": [1, 2, 3, 4, 5, 6], "time": "22:12" }
+    ]
+  },
+
+  "pick-3-id": {
+    "timezone": "America/Denver",
+    "state": "id",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:59" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:59" }
+    ]
+  },
+  "pick-4-id": {
+    "timezone": "America/Denver",
+    "state": "id",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:59" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:59" }
+    ]
+  },
+  "idaho-cash-id": {
+    "timezone": "America/Denver",
+    "state": "id",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:00" }
+    ]
+  },
+  "millionaire-for-life-id": {
+    "timezone": "America/Denver",
+    "state": "id",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:15" }
+    ]
+  },
+
+  "pick-3-nh": {
+    "timezone": "America/New_York",
+    "state": "nh",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:10" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:55" }
+    ]
+  },
+  "pick-4-nh": {
+    "timezone": "America/New_York",
+    "state": "nh",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:10" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:55" }
+    ]
+  },
+  "gimme-5-nh": {
+    "timezone": "America/New_York",
+    "state": "nh",
+    "draws": [
+      { "draw_type": "main", "days": [1, 2, 3, 4, 5], "time": "18:55" }
+    ]
+  },
+  "megabucks-nh": {
+    "timezone": "America/New_York",
+    "state": "nh",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "19:59" }
+    ]
+  },
+  "millionaire-for-life-nh": {
+    "timezone": "America/New_York",
+    "state": "nh",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pick-3-vt": {
+    "timezone": "America/New_York",
+    "state": "vt",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:10" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:55" }
+    ]
+  },
+  "pick-4-vt": {
+    "timezone": "America/New_York",
+    "state": "vt",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:10" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:55" }
+    ]
+  },
+  "gimme-5-vt": {
+    "timezone": "America/New_York",
+    "state": "vt",
+    "draws": [
+      { "draw_type": "main", "days": [1, 2, 3, 4, 5], "time": "18:55" }
+    ]
+  },
+  "megabucks-vt": {
+    "timezone": "America/New_York",
+    "state": "vt",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "19:59" }
+    ]
+  },
+  "millionaire-for-life-vt": {
+    "timezone": "America/New_York",
+    "state": "vt",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pick-3-il": {
+    "timezone": "America/Chicago",
+    "state": "il",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:40" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:20" }
+    ]
+  },
+  "pick-4-il": {
+    "timezone": "America/Chicago",
+    "state": "il",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:40" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:20" }
+    ]
+  },
+  "lucky-day-lotto-il": {
+    "timezone": "America/Chicago",
+    "state": "il",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:40" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:20" }
+    ]
+  },
+  "lotto-il": {
+    "timezone": "America/Chicago",
+    "state": "il",
+    "draws": [
+      { "draw_type": "main", "days": [1, 4, 6], "time": "21:20" }
+    ]
+  },
+
+  "pick-3-nj": {
+    "timezone": "America/New_York",
+    "state": "nj",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:59" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:57" }
+    ]
+  },
+  "pick-4-nj": {
+    "timezone": "America/New_York",
+    "state": "nj",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:59" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:57" }
+    ]
+  },
+  "jersey-cash-5-nj": {
+    "timezone": "America/New_York",
+    "state": "nj",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:57" }
+    ]
+  },
+  "pick-6-nj": {
+    "timezone": "America/New_York",
+    "state": "nj",
+    "draws": [
+      { "draw_type": "main", "days": [1, 4, 6], "time": "22:57" }
+    ]
+  },
+  "millionaire-for-life-nj": {
+    "timezone": "America/New_York",
+    "state": "nj",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pick-3-va": {
+    "timezone": "America/New_York",
+    "state": "va",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:59" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "pick-4-va": {
+    "timezone": "America/New_York",
+    "state": "va",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:59" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "pick-5-va": {
+    "timezone": "America/New_York",
+    "state": "va",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:59" },
+      { "draw_type": "night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "cash-pop-va": {
+    "timezone": "America/New_York",
+    "state": "va",
+    "draws": [
+      { "draw_type": "coffee-break", "days": [0, 1, 2, 3, 4, 5, 6], "time": "09:00" },
+      { "draw_type": "lunch-break", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:00" },
+      { "draw_type": "rush-hour", "days": [0, 1, 2, 3, 4, 5, 6], "time": "17:00" },
+      { "draw_type": "prime-time", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" },
+      { "draw_type": "after-hours", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:59" }
+    ]
+  },
+  "cash-5-va": {
+    "timezone": "America/New_York",
+    "state": "va",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "bank-a-million-va": {
+    "timezone": "America/New_York",
+    "state": "va",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "23:00" }
+    ]
+  },
+  "millionaire-for-life-va": {
+    "timezone": "America/New_York",
+    "state": "va",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "daily-3-in": {
+    "timezone": "America/New_York",
+    "state": "in",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:20" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "daily-4-in": {
+    "timezone": "America/New_York",
+    "state": "in",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:20" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "cash-pop-in": {
+    "timezone": "America/New_York",
+    "state": "in",
+    "draws": [
+      { "draw_type": "morning", "days": [0, 1, 2, 3, 4, 5, 6], "time": "09:30" },
+      { "draw_type": "matinee", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "afternoon", "days": [0, 1, 2, 3, 4, 5, 6], "time": "15:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:30" },
+      { "draw_type": "late-night", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:30" }
+    ]
+  },
+  "cash-5-in": {
+    "timezone": "America/New_York",
+    "state": "in",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "hoosier-lotto-in": {
+    "timezone": "America/New_York",
+    "state": "in",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "23:00" }
+    ]
+  },
+  "hoosier-lotto-plus-in": {
+    "timezone": "America/New_York",
+    "state": "in",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "23:00" }
+    ]
+  },
+  "quick-draw-in": {
+    "timezone": "America/New_York",
+    "state": "in",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:20" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:50" }
+    ]
+  },
+  "millionaire-for-life-in": {
+    "timezone": "America/New_York",
+    "state": "in",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pick-3-nm": {
+    "timezone": "America/Denver",
+    "state": "nm",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:00" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:30" }
+    ]
+  },
+  "pick-4-nm": {
+    "timezone": "America/Denver",
+    "state": "nm",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:00" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:30" }
+    ]
+  },
+  "road-runner-cash-nm": {
+    "timezone": "America/Denver",
+    "state": "nm",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:30" }
+    ]
+  },
+
+  "pick-3-wa": {
+    "timezone": "America/Los_Angeles",
+    "state": "wa",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:00" }
+    ]
+  },
+  "cash-pop-wa": {
+    "timezone": "America/Los_Angeles",
+    "state": "wa",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:00" }
+    ]
+  },
+  "match-4-wa": {
+    "timezone": "America/Los_Angeles",
+    "state": "wa",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:00" }
+    ]
+  },
+  "hit-5-wa": {
+    "timezone": "America/Los_Angeles",
+    "state": "wa",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:00" }
+    ]
+  },
+  "lotto-wa": {
+    "timezone": "America/Los_Angeles",
+    "state": "wa",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "20:00" }
+    ]
+  },
+  "daily-keno-wa": {
+    "timezone": "America/Los_Angeles",
+    "state": "wa",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:00" }
+    ]
+  },
+
+  "pick-3-ia": {
+    "timezone": "America/Chicago",
+    "state": "ia",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:20" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:00" }
+    ]
+  },
+  "pick-4-ia": {
+    "timezone": "America/Chicago",
+    "state": "ia",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:20" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:00" }
+    ]
+  },
+  "millionaire-for-life-ia": {
+    "timezone": "America/Chicago",
+    "state": "ia",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:15" }
+    ]
+  },
+
+  "numbers-ny": {
+    "timezone": "America/New_York",
+    "state": "ny",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:30" }
+    ]
+  },
+  "win-4-ny": {
+    "timezone": "America/New_York",
+    "state": "ny",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:30" }
+    ]
+  },
+  "take-5-ny": {
+    "timezone": "America/New_York",
+    "state": "ny",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:30" }
+    ]
+  },
+  "lotto-ny": {
+    "timezone": "America/New_York",
+    "state": "ny",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "20:15" }
+    ]
+  },
+  "pick-10-ny": {
+    "timezone": "America/New_York",
+    "state": "ny",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:30" }
+    ]
+  },
+  "millionaire-for-life-ny": {
+    "timezone": "America/New_York",
+    "state": "ny",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "dc-3-dc": {
+    "timezone": "America/New_York",
+    "state": "dc",
+    "draws": [
+      { "draw_type": "1:50pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:50" },
+      { "draw_type": "7:50pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:50" },
+      { "draw_type": "11:30pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:30" }
+    ]
+  },
+  "dc-4-dc": {
+    "timezone": "America/New_York",
+    "state": "dc",
+    "draws": [
+      { "draw_type": "1:50pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:50" },
+      { "draw_type": "7:50pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:50" },
+      { "draw_type": "11:30pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:30" }
+    ]
+  },
+  "dc-5-dc": {
+    "timezone": "America/New_York",
+    "state": "dc",
+    "draws": [
+      { "draw_type": "1:50pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:50" },
+      { "draw_type": "7:50pm", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:50" }
+    ]
+  },
+  "millionaire-for-life-dc": {
+    "timezone": "America/New_York",
+    "state": "dc",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pick-3-ks": {
+    "timezone": "America/Chicago",
+    "state": "ks",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:10" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:10" }
+    ]
+  },
+  "super-kansas-cash-ks": {
+    "timezone": "America/Chicago",
+    "state": "ks",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "21:05" }
+    ]
+  },
+  "2by2-ks": {
+    "timezone": "America/Chicago",
+    "state": "ks",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:30" }
+    ]
+  },
+  "millionaire-for-life-ks": {
+    "timezone": "America/Chicago",
+    "state": "ks",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:15" }
+    ]
+  },
+
+  "pick-3-nc": {
+    "timezone": "America/New_York",
+    "state": "nc",
+    "draws": [
+      { "draw_type": "daytime", "days": [0, 1, 2, 3, 4, 5, 6], "time": "15:00" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:22" }
+    ]
+  },
+  "pick-4-nc": {
+    "timezone": "America/New_York",
+    "state": "nc",
+    "draws": [
+      { "draw_type": "daytime", "days": [0, 1, 2, 3, 4, 5, 6], "time": "15:00" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:22" }
+    ]
+  },
+  "cash-pop-nc": {
+    "timezone": "America/New_York",
+    "state": "nc",
+    "draws": [
+      { "draw_type": "morning-buzz", "days": [0, 1, 2, 3, 4, 5, 6], "time": "09:00" },
+      { "draw_type": "lunch-rush", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:00" },
+      { "draw_type": "clock-out-cash", "days": [0, 1, 2, 3, 4, 5, 6], "time": "17:00" },
+      { "draw_type": "primetime-pop", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:00" },
+      { "draw_type": "midnight-money", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:59" }
+    ]
+  },
+  "cash-5-nc": {
+    "timezone": "America/New_York",
+    "state": "nc",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:22" }
+    ]
+  },
+  "millionaire-for-life-nc": {
+    "timezone": "America/New_York",
+    "state": "nc",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "daily-3-wv": {
+    "timezone": "America/New_York",
+    "state": "wv",
+    "draws": [
+      { "draw_type": "main", "days": [1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "daily-4-wv": {
+    "timezone": "America/New_York",
+    "state": "wv",
+    "draws": [
+      { "draw_type": "main", "days": [1, 2, 3, 4, 5, 6], "time": "18:59" }
+    ]
+  },
+  "cash-25-wv": {
+    "timezone": "America/New_York",
+    "state": "wv",
+    "draws": [
+      { "draw_type": "main", "days": [1, 2, 4, 5], "time": "18:59" }
+    ]
+  },
+  "millionaire-for-life-wv": {
+    "timezone": "America/New_York",
+    "state": "wv",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pick-3-ky": {
+    "timezone": "America/New_York",
+    "state": "ky",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:20" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "pick-4-ky": {
+    "timezone": "America/New_York",
+    "state": "ky",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:20" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "cash-ball-225-ky": {
+    "timezone": "America/New_York",
+    "state": "ky",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:00" }
+    ]
+  },
+  "millionaire-for-life-ky": {
+    "timezone": "America/New_York",
+    "state": "ky",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "millionaire-for-life-nd": {
+    "timezone": "America/Chicago",
+    "state": "nd",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:15" }
+    ]
+  },
+
+  "pick-3-wi": {
+    "timezone": "America/Chicago",
+    "state": "wi",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "pick-4-wi": {
+    "timezone": "America/Chicago",
+    "state": "wi",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "badger-5-wi": {
+    "timezone": "America/Chicago",
+    "state": "wi",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "super-cash-wi": {
+    "timezone": "America/Chicago",
+    "state": "wi",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+  "megabucks-wi": {
+    "timezone": "America/Chicago",
+    "state": "wi",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "21:00" }
+    ]
+  },
+  "all-or-nothing-wi": {
+    "timezone": "America/Chicago",
+    "state": "wi",
+    "draws": [
+      { "draw_type": "mid", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:30" },
+      { "draw_type": "eve", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:00" }
+    ]
+  },
+
+  "pick-3-la": {
+    "timezone": "America/Chicago",
+    "state": "la",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:59" }
+    ]
+  },
+  "pick-4-la": {
+    "timezone": "America/Chicago",
+    "state": "la",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:59" }
+    ]
+  },
+  "pick-5-la": {
+    "timezone": "America/Chicago",
+    "state": "la",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:59" }
+    ]
+  },
+  "easy-5-la": {
+    "timezone": "America/Chicago",
+    "state": "la",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "21:59" }
+    ]
+  },
+  "lotto-la": {
+    "timezone": "America/Chicago",
+    "state": "la",
+    "draws": [
+      { "draw_type": "main", "days": [3, 6], "time": "21:59" }
+    ]
+  },
+
+  "pick-3-oh": {
+    "timezone": "America/New_York",
+    "state": "oh",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:29" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:29" }
+    ]
+  },
+  "pick-4-oh": {
+    "timezone": "America/New_York",
+    "state": "oh",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:29" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:29" }
+    ]
+  },
+  "pick-5-oh": {
+    "timezone": "America/New_York",
+    "state": "oh",
+    "draws": [
+      { "draw_type": "midday", "days": [0, 1, 2, 3, 4, 5, 6], "time": "12:29" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:29" }
+    ]
+  },
+  "kicker-oh": {
+    "timezone": "America/New_York",
+    "state": "oh",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "19:05" }
+    ]
+  },
+  "rolling-cash-5-oh": {
+    "timezone": "America/New_York",
+    "state": "oh",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "19:05" }
+    ]
+  },
+  "classic-lotto-oh": {
+    "timezone": "America/New_York",
+    "state": "oh",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "19:05" }
+    ]
+  },
+  "millionaire-for-life-oh": {
+    "timezone": "America/New_York",
+    "state": "oh",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "cowboy-draw-wy": {
+    "timezone": "America/Denver",
+    "state": "wy",
+    "draws": [
+      { "draw_type": "main", "days": [1, 4], "time": "14:00" }
+    ]
+  },
+  "2by2-wy": {
+    "timezone": "America/Denver",
+    "state": "wy",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "20:30" }
+    ]
+  },
+  "millionaire-for-life-wy": {
+    "timezone": "America/Denver",
+    "state": "wy",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:15" }
+    ]
+  },
+
+  "pick-3-me": {
+    "timezone": "America/New_York",
+    "state": "me",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:10" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:55" }
+    ]
+  },
+  "pick-4-me": {
+    "timezone": "America/New_York",
+    "state": "me",
+    "draws": [
+      { "draw_type": "day", "days": [0, 1, 2, 3, 4, 5, 6], "time": "13:10" },
+      { "draw_type": "evening", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:55" }
+    ]
+  },
+  "cash-pop-me": {
+    "timezone": "America/New_York",
+    "state": "me",
+    "draws": [
+      { "draw_type": "early-bird", "days": [0, 1, 2, 3, 4, 5, 6], "time": "08:30" },
+      { "draw_type": "brunch", "days": [0, 1, 2, 3, 4, 5, 6], "time": "11:30" },
+      { "draw_type": "matinee", "days": [0, 1, 2, 3, 4, 5, 6], "time": "14:30" },
+      { "draw_type": "suppertime", "days": [0, 1, 2, 3, 4, 5, 6], "time": "18:30" },
+      { "draw_type": "night-owl", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:30" }
+    ]
+  },
+  "gimme-5-me": {
+    "timezone": "America/New_York",
+    "state": "me",
+    "draws": [
+      { "draw_type": "main", "days": [1, 2, 3, 4, 5], "time": "18:55" }
+    ]
+  },
+  "megabucks-me": {
+    "timezone": "America/New_York",
+    "state": "me",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "19:59" }
+    ]
+  },
+  "millionaire-for-life-me": {
+    "timezone": "America/New_York",
+    "state": "me",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  },
+
+  "pick-3-ok": {
+    "timezone": "America/Chicago",
+    "state": "ok",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:10" }
+    ]
+  },
+  "cash-5-ok": {
+    "timezone": "America/Chicago",
+    "state": "ok",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "21:10" }
+    ]
+  },
+  "millionaire-for-life-ok": {
+    "timezone": "America/Chicago",
+    "state": "ok",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "22:15" }
+    ]
+  },
+
+  "powerball": {
+    "timezone": "America/New_York",
+    "state": "multi",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "22:59" }
+    ]
+  },
+  "powerball-double-play": {
+    "timezone": "America/New_York",
+    "state": "multi",
+    "draws": [
+      { "draw_type": "double-play", "days": [1, 3, 6], "time": "22:59" }
+    ]
+  },
+  "mega-millions": {
+    "timezone": "America/New_York",
+    "state": "multi",
+    "draws": [
+      { "draw_type": "main", "days": [2, 5], "time": "23:00" }
+    ]
+  },
+  "lotto-america": {
+    "timezone": "America/Chicago",
+    "state": "multi",
+    "draws": [
+      { "draw_type": "main", "days": [1, 3, 6], "time": "21:15" }
+    ]
+  },
+  "millionaire-for-life": {
+    "timezone": "America/New_York",
+    "state": "multi",
+    "draws": [
+      { "draw_type": "main", "days": [0, 1, 2, 3, 4, 5, 6], "time": "23:15" }
+    ]
+  }
+}

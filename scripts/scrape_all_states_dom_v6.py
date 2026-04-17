@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 import re
@@ -54,6 +55,7 @@ DEBUG_SLUGS = {
     "texas-two-step-tx",
     "cash-3-tn",
     "cash-4-tn",
+    "pick-6-nj",
 }
 
 
@@ -81,9 +83,47 @@ def get_states():
                 """
             )
         ).mappings().all()
-        return [dict(r) for r in rows]
+
+        states = [dict(r) for r in rows]
+
+        has_multi = any((s.get("slug") or "").lower() == "multi" for s in states)
+        if not has_multi:
+            states.append(
+                {
+                    "id": -1,
+                    "name": "Multi-State",
+                    "slug": "multi",
+                    "source_url": "https://www.lotterypost.com/results",
+                }
+            )
+
+        return states
     finally:
         db.close()
+
+
+def filter_states(states, only_state: str | None = None, multi_state_only: bool = False):
+    if multi_state_only:
+        filtered = []
+        for state in states:
+            slug = (state.get("slug") or "").lower()
+            if slug in {"us", "multi", "multistate"}:
+                filtered.append(state)
+                continue
+
+            source_url = (state.get("source_url") or "").lower()
+            name = (state.get("name") or "").lower()
+
+            if "multi" in source_url or "multi-state" in name or "multistate" in name:
+                filtered.append(state)
+
+        return filtered
+
+    if only_state:
+        only_state = only_state.lower().strip()
+        return [s for s in states if (s.get("slug") or "").lower() == only_state]
+
+    return states
 
 
 def get_games():
@@ -870,7 +910,6 @@ def validate_entry(
         return False
 
     rule = GAME_RULES_BY_FINAL_SLUG.get(final_slug)
-
     if not rule:
         rule = GAME_RULES_BY_CANONICAL_SLUG.get(canonical_slug)
 
@@ -908,8 +947,18 @@ def validate_entry(
             return False
 
         days_in_month = {
-            1: 31, 2: 29, 3: 31, 4: 30, 5: 31, 6: 30,
-            7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31,
+            1: 31,
+            2: 29,
+            3: 31,
+            4: 30,
+            5: 31,
+            6: 30,
+            7: 31,
+            8: 31,
+            9: 30,
+            10: 31,
+            11: 30,
+            12: 31,
         }
 
         if not (1 <= day <= days_in_month[month]):
@@ -933,6 +982,7 @@ def save_draw(
     source_url: str,
     raw_payload: dict,
     notes: str,
+    secondary_draws=None,
 ):
     db = SessionLocal()
     try:
@@ -960,7 +1010,8 @@ def save_draw(
                 existing.next_draw_timezone = next_draw_timezone
             if hasattr(existing, "next_draw_relative"):
                 existing.next_draw_relative = next_draw_relative
-
+            if hasattr(existing, "secondary_draws"):
+                existing.secondary_draws = secondary_draws
             if hasattr(existing, "raw_payload"):
                 existing.raw_payload = raw_payload
             if hasattr(existing, "source_provider"):
@@ -985,7 +1036,7 @@ def save_draw(
             multiplier=multiplier,
             jackpot=jackpot,
             cash_payout=None,
-            secondary_draws=None,
+            secondary_draws=secondary_draws,
             notes=notes,
             source_url=source_url,
         )
@@ -998,7 +1049,6 @@ def save_draw(
             row.next_draw_timezone = next_draw_timezone
         if hasattr(row, "next_draw_relative"):
             row.next_draw_relative = next_draw_relative
-
         if hasattr(row, "raw_payload"):
             row.raw_payload = raw_payload
         if hasattr(row, "source_provider"):
@@ -1028,9 +1078,7 @@ def get_or_create_game_in_db(
 
     db = SessionLocal()
     try:
-        game = db.execute(
-            select(Game).where(Game.slug == final_slug.lower())
-        ).scalar_one_or_none()
+        game = db.execute(select(Game).where(Game.slug == final_slug.lower())).scalar_one_or_none()
 
         if game:
             changed = False
@@ -1089,8 +1137,349 @@ def _save_ci_debug_files(page, state_slug: str, full_page_text: str):
         pass
 
 
+def scrape_multi_state_index(page, state: dict, games_by_slug: dict[str, Game]):
+    results = []
+
+    link_map = {
+        "powerball": None,
+        "powerball-double-play": None,
+        "mega-millions": None,
+        "lotto-america": None,
+        "2by2": None,
+        "millionaire-for-life": None,
+    }
+
+    anchors = page.locator("a")
+    total = anchors.count()
+
+    for i in range(total):
+        a = anchors.nth(i)
+        try:
+            href = a.get_attribute("href") or ""
+            text_value = clean(a.inner_text()).lower()
+        except Exception:
+            continue
+
+        href_low = href.lower()
+        href_norm = href_low.replace("-", "").replace("_", "").replace(" ", "")
+        text_norm = text_value.replace("-", "").replace("_", "").replace(" ", "")
+
+        if "/results/xx/powerball" in href_low or text_norm == "powerball":
+            link_map["powerball"] = href
+        elif (
+            "/results/xx/powerballdoubleplay" in href_norm
+            or "/results/xx/powerball-double-play" in href_low
+            or "powerballdoubleplay" in text_norm
+        ):
+            link_map["powerball-double-play"] = href
+        elif "/results/xx/megamillions" in href_norm or "megamillions" in text_norm:
+            link_map["mega-millions"] = href
+        elif "/results/xx/lottoamerica" in href_norm or "lottoamerica" in text_norm:
+            link_map["lotto-america"] = href
+        elif (
+            "/results/xx/2by2" in href_norm
+            or text_norm == "2by2"
+            or text_norm == "twobytwo"
+        ):
+            link_map["2by2"] = href
+        elif (
+            "/results/xx/millionaireforlife" in href_norm
+            or "millionaireforlife" in text_norm
+        ):
+            link_map["millionaire-for-life"] = href
+
+    print("MULTI LINKS FOUND:", link_map)
+
+    if not link_map["powerball-double-play"]:
+        link_map["powerball-double-play"] = "/results/xx/powerballdoubleplay"
+
+    if not link_map["2by2"]:
+        link_map["2by2"] = "/results/xx/2by2"
+
+    if not link_map["millionaire-for-life"]:
+        link_map["millionaire-for-life"] = "/results/xx/millionaireforlife"
+
+    print("MULTI LINKS FINAL:", link_map)
+
+    for final_slug, href in link_map.items():
+        if not href:
+            results.append(
+                {
+                    "status": "error",
+                    "title": final_slug,
+                    "resolved_slug": final_slug,
+                    "draw_date": None,
+                    "error": f"Missing multi-state link for {final_slug}",
+                }
+            )
+            continue
+
+        if href.startswith("/"):
+            game_url = f"https://www.lotterypost.com{href}"
+        else:
+            game_url = href
+
+        print(f"MULTI OPEN: {final_slug} -> {game_url}")
+
+        try:
+            page.goto(game_url, wait_until="domcontentloaded", timeout=120000)
+            page.wait_for_timeout(3000)
+
+            full_page_text = clean(page.locator("body").inner_text())
+            sections = page.locator("section")
+
+            if sections.count() == 0:
+                results.append(
+                    {
+                        "status": "error",
+                        "title": final_slug,
+                        "resolved_slug": final_slug,
+                        "draw_date": None,
+                        "error": f"No sections found in multi-state game page: {game_url}",
+                    }
+                )
+                continue
+
+            matched_any = False
+
+            for i in range(sections.count()):
+                section = sections.nth(i)
+
+                if section.locator("h2").count() == 0:
+                    continue
+
+                try:
+                    section_title = clean(section.locator("h2").first.inner_text())
+                except Exception:
+                    continue
+
+                if not section_title:
+                    continue
+
+                block_nodes = detect_draw_blocks(section)
+
+                for block in block_nodes:
+                    try:
+                        block_title = extract_title_from_block(block, section_title)
+                        draw_date = extract_date_from_block(block)
+
+                        if not draw_date and section.locator("time").count() > 0:
+                            try:
+                                draw_date = parse_date(section.locator("time").first.inner_text())
+                            except Exception:
+                                draw_date = None
+
+                        if not draw_date:
+                            continue
+
+                        info = canonical_game_info(block_title, state_code="us")
+
+                        canonical_name = info["canonical_name"]
+                        canonical_slug = info["canonical_slug"]
+                        detected_final_slug = info["final_slug"]
+                        parser_type = info["parser_type"]
+
+                        if detected_final_slug != final_slug:
+                            continue
+
+                        matched_any = True
+
+                        block_text = clean(block.inner_text())
+                        draw_type = detect_draw_type_from_text(block_title + " " + block_text) or info["draw_type"]
+
+                        raw_numbers = extract_numbers_for_block(
+                            block,
+                            parser_type=parser_type,
+                            final_slug=detected_final_slug,
+                            canonical_slug=canonical_slug,
+                        )
+
+                        secondary_draws = None
+                        extras = extract_text_extras(block)
+                        page_extras = extract_page_level_extras(full_page_text, block_title)
+
+                        bonus_number = extras["bonus_number"] or page_extras.get("bonus_number")
+                        multiplier = extras["multiplier"]
+
+                        jackpot = extras["jackpot"] or page_extras["jackpot"]
+                        jackpot_change = extras["jackpot_change"] or page_extras["jackpot_change"]
+                        next_draw_text = extras["next_draw_text"] or page_extras["next_draw_text"]
+                        next_draw_timezone = extras["next_draw_timezone"] or page_extras["next_draw_timezone"]
+                        next_draw_relative = extras["next_draw_relative"] or page_extras["next_draw_relative"]
+
+                        parts = split_main_and_bonus(
+                            game_slug=detected_final_slug,
+                            raw_numbers=raw_numbers,
+                            bonus_number=bonus_number,
+                            multiplier=multiplier,
+                        )
+
+                        main_numbers = parts["main_numbers"]
+                        final_bonus_number = parts["bonus_number"]
+                        final_multiplier = parts["multiplier"]
+
+                        special_rule = get_special_game_rule(detected_final_slug)
+                        extra_ball_label = special_rule.get("extra_ball_label")
+                        extra_ball_color = special_rule.get("extra_ball_color")
+                        has_double_play = special_rule.get("has_double_play", False)
+                        double_play_label = special_rule.get("double_play_label")
+
+                        payload = {
+                            "title": block_title,
+                            "section_title": section_title,
+                            "state_slug": state["slug"],
+                            "canonical_name": canonical_name,
+                            "canonical_slug": canonical_slug,
+                            "final_slug": detected_final_slug,
+                            "draw_type": draw_type,
+                            "parser_type": parser_type,
+                            "raw_numbers": raw_numbers,
+                            "main_numbers": main_numbers,
+                            "secondary_draws": secondary_draws,
+                            "bonus_number": final_bonus_number,
+                            "multiplier": final_multiplier,
+                            "jackpot": jackpot,
+                            "jackpot_change": jackpot_change,
+                            "next_draw_text": next_draw_text,
+                            "next_draw_timezone": next_draw_timezone,
+                            "next_draw_relative": next_draw_relative,
+                            "extra_ball_label": extra_ball_label,
+                            "extra_ball_color": extra_ball_color,
+                            "has_double_play": has_double_play,
+                            "double_play_label": double_play_label,
+                        }
+
+                        if not validate_entry(
+                            final_slug=detected_final_slug,
+                            canonical_slug=canonical_slug,
+                            main_numbers=main_numbers,
+                            bonus_number=final_bonus_number,
+                        ):
+                            results.append(
+                                {
+                                    "status": "invalid",
+                                    "title": block_title,
+                                    "resolved_slug": detected_final_slug,
+                                    "draw_date": str(draw_date),
+                                    "draw_type": draw_type,
+                                    "payload": payload,
+                                }
+                            )
+                            continue
+
+                        game, created_game = get_or_create_game_in_db(
+                            final_slug=detected_final_slug,
+                            canonical_name=canonical_name,
+                            games_by_slug=games_by_slug,
+                        )
+
+                        notes_parts = [
+                            "Scraped from Lottery Post multi-state game page",
+                            f"original_title={block_title}",
+                            f"section_title={section_title}",
+                            f"parser_type={parser_type}",
+                            f"canonical_slug={canonical_slug}",
+                            f"draw_type={draw_type}",
+                        ]
+
+                        if extra_ball_label:
+                            notes_parts.append(f"extra_ball_label={extra_ball_label}")
+                        if extra_ball_color:
+                            notes_parts.append(f"extra_ball_color={extra_ball_color}")
+                        if has_double_play:
+                            notes_parts.append("has_double_play=true")
+                        if double_play_label:
+                            notes_parts.append(f"double_play_label={double_play_label}")
+
+                        final_notes = " | ".join(notes_parts)
+
+                        action = save_draw(
+                            game=game,
+                            draw_date=draw_date,
+                            draw_type=draw_type,
+                            main_numbers=main_numbers,
+                            bonus_number=final_bonus_number,
+                            multiplier=final_multiplier,
+                            jackpot=jackpot,
+                            jackpot_change=jackpot_change,
+                            next_draw_text=next_draw_text,
+                            next_draw_timezone=next_draw_timezone,
+                            next_draw_relative=next_draw_relative,
+                            source_url=game_url,
+                            raw_payload=payload,
+                            notes=final_notes,
+                            secondary_draws=secondary_draws,
+                        )
+
+                        row = {
+                            "status": action,
+                            "title": block_title,
+                            "resolved_slug": game.slug,
+                            "draw_date": str(draw_date),
+                            "draw_type": draw_type,
+                            "main_numbers": main_numbers,
+                            "secondary_draws": secondary_draws,
+                            "bonus_number": final_bonus_number,
+                            "multiplier": final_multiplier,
+                            "jackpot": jackpot,
+                            "jackpot_change": jackpot_change,
+                            "next_draw_text": next_draw_text,
+                            "next_draw_timezone": next_draw_timezone,
+                            "next_draw_relative": next_draw_relative,
+                            "extra_ball_label": extra_ball_label,
+                            "extra_ball_color": extra_ball_color,
+                            "has_double_play": has_double_play,
+                            "double_play_label": double_play_label,
+                        }
+
+                        if created_game:
+                            row["created_game"] = True
+
+                        results.append(row)
+
+                    except Exception as e:
+                        results.append(
+                            {
+                                "status": "error",
+                                "title": final_slug,
+                                "resolved_slug": final_slug,
+                                "draw_date": None,
+                                "error": str(e),
+                            }
+                        )
+
+            if not matched_any:
+                results.append(
+                    {
+                        "status": "error",
+                        "title": final_slug,
+                        "resolved_slug": final_slug,
+                        "draw_date": None,
+                        "error": f"No matching draw block found for {final_slug} in {game_url}",
+                    }
+                )
+
+        except Exception as e:
+            results.append(
+                {
+                    "status": "error",
+                    "title": final_slug,
+                    "resolved_slug": final_slug,
+                    "draw_date": None,
+                    "error": str(e),
+                }
+            )
+
+    return results
+
+
 def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
     is_ci = os.getenv("CI", "").lower() == "true"
+
+    if (state.get("slug") or "").lower() == "multi":
+        page.goto(state["source_url"], wait_until="domcontentloaded", timeout=120000)
+        page.wait_for_timeout(3000)
+        return scrape_multi_state_index(page, state, games_by_slug)
 
     page.goto(state["source_url"], wait_until="domcontentloaded", timeout=120000)
     page.wait_for_timeout(5000)
@@ -1207,6 +1596,45 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     canonical_slug=canonical_slug,
                 )
 
+                secondary_draws = None
+                try:
+                    payload_lines = [clean(x) for x in block.inner_text().splitlines() if clean(x)]
+                    title_low = clean(block_title).lower()
+
+                    idx = 0
+                    while idx < len(payload_lines):
+                        low = payload_lines[idx].lower().rstrip(":")
+
+                        if low in {"double play drawing", "double play"}:
+                            dp = []
+                            j = idx + 1
+                            while j < len(payload_lines) and re.fullmatch(r"\d{1,2}", payload_lines[j]):
+                                dp.append(int(payload_lines[j]))
+                                j += 1
+
+                            if dp:
+                                if len(dp) == 6 and "powerball" in title_low:
+                                    secondary_draws = [
+                                        {
+                                            "draw_type": "double-play",
+                                            "main_numbers": dp[:5],
+                                            "bonus_number": str(dp[5]),
+                                        }
+                                    ]
+                                else:
+                                    secondary_draws = [
+                                        {
+                                            "draw_type": "double-play",
+                                            "main_numbers": dp,
+                                            "bonus_number": None,
+                                        }
+                                    ]
+                                break
+
+                        idx += 1
+                except Exception:
+                    secondary_draws = None
+
                 extras = extract_text_extras(block)
                 page_extras = extract_page_level_extras(full_page_text, block_title)
 
@@ -1217,6 +1645,8 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     print("FINAL SLUG:", final_slug)
                     print("DRAW TYPE:", draw_type)
                     print("RAW NUMBERS:", raw_numbers)
+                    print("BLOCK TEXT:", block_text[:2500])
+                    print("SECONDARY DRAWS:", secondary_draws)
                     print("SECTION BONUS:", extras.get("bonus_number"))
                     print("PAGE BONUS:", page_extras.get("bonus_number"))
                     print("PAGE EXTRAS:", page_extras)
@@ -1248,6 +1678,19 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                 has_double_play = special_rule.get("has_double_play", False)
                 double_play_label = special_rule.get("double_play_label")
 
+                if has_double_play and secondary_draws is None:
+                    expected_main = len(main_numbers)
+                    if expected_main > 0 and len(raw_numbers) >= expected_main * 2:
+                        candidate_secondary = raw_numbers[expected_main : expected_main * 2]
+                        if len(candidate_secondary) == expected_main:
+                            secondary_draws = [
+                                {
+                                    "draw_type": "double-play",
+                                    "main_numbers": candidate_secondary,
+                                    "bonus_number": None,
+                                }
+                            ]
+
                 payload = {
                     "title": block_title,
                     "section_title": section_title,
@@ -1259,6 +1702,7 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     "parser_type": parser_type,
                     "raw_numbers": raw_numbers,
                     "main_numbers": main_numbers,
+                    "secondary_draws": secondary_draws,
                     "bonus_number": final_bonus_number,
                     "multiplier": final_multiplier,
                     "jackpot": jackpot,
@@ -1279,14 +1723,16 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     main_numbers=main_numbers,
                     bonus_number=final_bonus_number,
                 ):
-                    results.append({
-                        "status": "invalid",
-                        "title": block_title,
-                        "resolved_slug": final_slug,
-                        "draw_date": str(draw_date),
-                        "draw_type": draw_type,
-                        "payload": payload,
-                    })
+                    results.append(
+                        {
+                            "status": "invalid",
+                            "title": block_title,
+                            "resolved_slug": final_slug,
+                            "draw_date": str(draw_date),
+                            "draw_type": draw_type,
+                            "payload": payload,
+                        }
+                    )
                     continue
 
                 try:
@@ -1296,15 +1742,17 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                         games_by_slug=games_by_slug,
                     )
                 except Exception as e:
-                    results.append({
-                        "status": "unmatched",
-                        "title": block_title,
-                        "resolved_slug": final_slug,
-                        "draw_date": str(draw_date),
-                        "draw_type": draw_type,
-                        "error": str(e),
-                        "payload": payload,
-                    })
+                    results.append(
+                        {
+                            "status": "unmatched",
+                            "title": block_title,
+                            "resolved_slug": final_slug,
+                            "draw_date": str(draw_date),
+                            "draw_type": draw_type,
+                            "error": str(e),
+                            "payload": payload,
+                        }
+                    )
                     continue
 
                 notes_parts = [
@@ -1318,16 +1766,12 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
 
                 if extra_ball_label:
                     notes_parts.append(f"extra_ball_label={extra_ball_label}")
-
                 if extra_ball_color:
                     notes_parts.append(f"extra_ball_color={extra_ball_color}")
-
                 if has_double_play:
                     notes_parts.append("has_double_play=true")
-
                 if double_play_label:
                     notes_parts.append(f"double_play_label={double_play_label}")
-
                 if parser_type in {"special", "many-numbers", "2by2"}:
                     notes_parts.append(f"raw_numbers={raw_numbers}")
 
@@ -1348,6 +1792,7 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     source_url=state["source_url"],
                     raw_payload=payload,
                     notes=final_notes,
+                    secondary_draws=secondary_draws,
                 )
 
                 row = {
@@ -1357,6 +1802,7 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                     "draw_date": str(draw_date),
                     "draw_type": draw_type,
                     "main_numbers": main_numbers,
+                    "secondary_draws": secondary_draws,
                     "bonus_number": final_bonus_number,
                     "multiplier": final_multiplier,
                     "jackpot": jackpot,
@@ -1376,13 +1822,15 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
                 results.append(row)
 
             except Exception as e:
-                results.append({
-                    "status": "error",
-                    "title": section_title,
-                    "resolved_slug": None,
-                    "draw_date": None,
-                    "error": str(e),
-                })
+                results.append(
+                    {
+                        "status": "error",
+                        "title": section_title,
+                        "resolved_slug": None,
+                        "draw_date": None,
+                        "error": str(e),
+                    }
+                )
 
     if is_ci and len(results) == 0:
         print(f"CI DEBUG EMPTY RESULTS: state={state['slug']}")
@@ -1392,7 +1840,22 @@ def scrape_state(page, state: dict, games_by_slug: dict[str, Game]):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Lottery Post DOM scraper v6")
+    parser.add_argument("--state", dest="only_state", help="Run only one state slug, e.g. pr or az")
+    parser.add_argument(
+        "--multi-state-only",
+        action="store_true",
+        help="Run only multi-state source(s)",
+    )
+    args = parser.parse_args()
+
     states = get_states()
+    states = filter_states(states, only_state=args.only_state, multi_state_only=args.multi_state_only)
+
+    if not states:
+        print("NO STATES MATCHED THE FILTER")
+        return
+
     games_by_slug = get_games()
 
     created = 0
@@ -1433,12 +1896,14 @@ def main():
                 rows = scrape_state(page, state, games_by_slug)
             except Exception as e:
                 print(f"ERROR: {e}")
-                report.append({
-                    "state": state["slug"],
-                    "state_name": state["name"],
-                    "error": str(e),
-                    "rows": [],
-                })
+                report.append(
+                    {
+                        "state": state["slug"],
+                        "state_name": state["name"],
+                        "error": str(e),
+                        "rows": [],
+                    }
+                )
                 continue
 
             for row in rows:
@@ -1463,15 +1928,25 @@ def main():
                 elif status == "error":
                     print(f"ERROR ROW: {row.get('title')} -> {row.get('error')}")
 
-            report.append({
-                "state": state["slug"],
-                "state_name": state["name"],
-                "rows": rows,
-            })
+            report.append(
+                {
+                    "state": state["slug"],
+                    "state_name": state["name"],
+                    "rows": rows,
+                }
+            )
 
         browser.close()
 
-    with open("all_states_dom_report_v6.json", "w", encoding="utf-8") as f:
+    report_suffix = "all"
+    if args.only_state:
+        report_suffix = args.only_state.lower()
+    elif args.multi_state_only:
+        report_suffix = "multi"
+
+    report_name = f"all_states_dom_report_v6_{report_suffix}.json"
+
+    with open(report_name, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
     print("\nSUMMARY")
@@ -1481,7 +1956,7 @@ def main():
     print(f"Updated draws: {updated}")
     print(f"Unmatched: {unmatched}")
     print(f"Invalid: {invalid}")
-    print("Report saved: all_states_dom_report_v6.json")
+    print(f"Report saved: {report_name}")
 
 
 if __name__ == "__main__":

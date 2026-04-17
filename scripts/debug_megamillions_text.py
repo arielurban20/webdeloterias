@@ -32,4 +32,4 @@ with sync_playwright() as p:
             except Exception as e:
                 print("ERROR READING SECTION:", e)
 
-    browser.close()
+    browser.close()S
