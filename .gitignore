@@ -15,3 +15,12 @@ kansas_dom_results.json
 state_pages_preview_report.json
 strict_multistate_state_pages_report.json
 ultimo_scrape.txt
+
+# Debug artifacts del scraper
+all_states_dom_report_v6*.json
+debug_ci/
+hot_window_report.*
+audit_bad_number_counts_report.*
+*.lock
+scraper_status_*.json
+scraper_status_*.txt

@@ -1,3 +1,5 @@
+import json
+import os
 from datetime import date
 from typing import Optional
 
@@ -11,14 +13,24 @@ from app.models import Draw, Game
 router = APIRouter(prefix="/draws", tags=["Draws"])
 
 
-VALID_MULTI_STATE_BY_STATE = {
-    "ny": {"powerball", "mega-millions"},
-    "nj": {"powerball", "mega-millions", "powerball-double-play", "millionaire-for-life"},
-    "fl": {"powerball", "mega-millions", "powerball-double-play"},
-    "ca": {"powerball", "mega-millions", "powerball-double-play"},
-    "dc": {"powerball", "mega-millions", "lotto-america", "2by2", "millionaire-for-life", "powerball-double-play"},
-    "pr": {"powerball", "powerball-double-play"},
-}
+def _load_multistate_config() -> dict:
+    config_path = os.path.join(os.path.dirname(__file__), "..", "config", "multistate_by_state.json")
+    config_path = os.path.normpath(config_path)
+    try:
+        with open(config_path, "r") as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        raise RuntimeError(
+            f"multistate_by_state.json not found at expected path: {config_path}"
+        )
+    except json.JSONDecodeError as exc:
+        raise RuntimeError(
+            f"multistate_by_state.json is not valid JSON ({config_path}): {exc}"
+        )
+    return {state: set(games) for state, games in data.items()}
+
+
+VALID_MULTI_STATE_BY_STATE = _load_multistate_config()
 
 
 def get_allowed_multistate_for_state(state_slug: str) -> set[str]:
@@ -53,20 +65,20 @@ def draw_to_dict(draw: Draw, game_slug: Optional[str] = None) -> dict:
         "bonus_number": draw.bonus_number,
         "multiplier": draw.multiplier,
         "jackpot": draw.jackpot,
-        "jackpot_change": getattr(draw, "jackpot_change", None),
-        "next_draw_text": getattr(draw, "next_draw_text", None),
-        "next_draw_timezone": getattr(draw, "next_draw_timezone", None),
-        "next_draw_relative": getattr(draw, "next_draw_relative", None),
+        "jackpot_change": draw.jackpot_change,
+        "next_draw_text": draw.next_draw_text,
+        "next_draw_timezone": draw.next_draw_timezone,
+        "next_draw_relative": draw.next_draw_relative,
         "cash_payout": draw.cash_payout,
         "secondary_draws": draw.secondary_draws,
         "notes": draw.notes,
         "source_url": draw.source_url,
-        "created_at": str(draw.created_at) if getattr(draw, "created_at", None) else None,
-        "updated_at": str(draw.updated_at) if getattr(draw, "updated_at", None) else None,
-        "verification_status": getattr(draw, "verification_status", None),
-        "confidence_score": getattr(draw, "confidence_score", None),
-        "source_provider": getattr(draw, "source_provider", None),
-        "needs_review": getattr(draw, "needs_review", None),
+        "created_at": str(draw.created_at) if draw.created_at else None,
+        "updated_at": str(draw.updated_at) if draw.updated_at else None,
+        "verification_status": draw.verification_status,
+        "confidence_score": draw.confidence_score,
+        "source_provider": draw.source_provider,
+        "needs_review": draw.needs_review,
     }
 
 
@@ -268,10 +280,10 @@ def search_draws(
         if draw_date:
             stmt = stmt.where(Draw.draw_date == draw_date)
 
-        if needs_review is not None and hasattr(Draw, "needs_review"):
+        if needs_review is not None:
             stmt = stmt.where(Draw.needs_review == needs_review)
 
-        if verification_status and hasattr(Draw, "verification_status"):
+        if verification_status:
             stmt = stmt.where(Draw.verification_status == verification_status)
 
         stmt = stmt.order_by(desc(Draw.draw_date), desc(Draw.id)).limit(limit)
