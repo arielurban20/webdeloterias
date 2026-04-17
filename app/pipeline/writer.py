@@ -5,33 +5,49 @@ NormalizedDraw is the canonical intermediate representation produced by every
 official scraper and consumed by the persistence layer.
 """
 
+import logging
 from dataclasses import dataclass, field
 from datetime import date
-from typing import List, Optional
+from typing import Any, List, Optional
 
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
 from app.models import Draw, Game
 
+logger = logging.getLogger(__name__)
+
 
 @dataclass
 class NormalizedDraw:
     game_slug: str
     draw_date: date
-    draw_type: str = "main"
-    main_numbers: List[int] = field(default_factory=list)
+    draw_type: str
+    main_numbers: List[int]
     bonus_number: Optional[str] = None
     multiplier: Optional[str] = None
+    jackpot: Optional[str] = None
+    jackpot_change: Optional[str] = None
+    cash_payout: Optional[str] = None
+    next_draw_text: Optional[str] = None
+    next_draw_timezone: Optional[str] = None
+    next_draw_relative: Optional[str] = None
+    secondary_draws: Optional[Any] = None
     source_url: Optional[str] = None
-    source_provider: Optional[str] = None
-    confidence_score: float = 0.0
-    verification_status: str = "unverified"
+    source_provider: str = "unknown"
+    notes: Optional[str] = None
+    raw_payload: Optional[Any] = None
+    confidence_score: Optional[float] = None
+    verification_status: str = "pending"
+    needs_review: bool = False
 
 
 def save_draw(db: Session, normalized: NormalizedDraw) -> str:
-    """
-    Upsert a NormalizedDraw into the draws table.
+    """Upsert a NormalizedDraw into the database.
+
+    Searches for a Game by game_slug. If not found, logs a warning and
+    returns 'skipped' without raising. Otherwise inserts or updates the
+    matching Draw row (matched by game_id + draw_date + draw_type).
 
     Returns:
         "created"  — a new row was inserted.
@@ -39,10 +55,11 @@ def save_draw(db: Session, normalized: NormalizedDraw) -> str:
         "skipped"  — game not found in the games table.
     """
     game: Optional[Game] = db.execute(
-        select(Game).where(Game.slug == normalized.game_slug)
+        select(Game).where(Game.slug == normalized.game_slug.lower())
     ).scalar_one_or_none()
 
     if game is None:
+        logger.warning("save_draw: game not found for slug '%s' — skipping", normalized.game_slug)
         return "skipped"
 
     existing: Optional[Draw] = db.execute(
@@ -57,39 +74,45 @@ def save_draw(db: Session, normalized: NormalizedDraw) -> str:
         existing.main_numbers = normalized.main_numbers
         existing.bonus_number = normalized.bonus_number
         existing.multiplier = normalized.multiplier
+        existing.jackpot = normalized.jackpot
+        existing.jackpot_change = normalized.jackpot_change
+        existing.cash_payout = normalized.cash_payout
+        existing.next_draw_text = normalized.next_draw_text
+        existing.next_draw_timezone = normalized.next_draw_timezone
+        existing.next_draw_relative = normalized.next_draw_relative
+        existing.secondary_draws = normalized.secondary_draws
         existing.source_url = normalized.source_url
-        _set_optional(existing, "source_provider", normalized.source_provider)
-        _set_optional(existing, "confidence_score", normalized.confidence_score)
-        _set_optional(existing, "verification_status", normalized.verification_status)
-        _set_optional(existing, "needs_review", False)
+        existing.source_provider = normalized.source_provider
+        existing.notes = normalized.notes
+        existing.raw_payload = normalized.raw_payload
+        existing.confidence_score = normalized.confidence_score
+        existing.verification_status = normalized.verification_status
+        existing.needs_review = normalized.needs_review
         db.commit()
         return "updated"
 
-    row = Draw(
+    draw = Draw(
         game_id=game.id,
         draw_date=normalized.draw_date,
         draw_type=normalized.draw_type,
         main_numbers=normalized.main_numbers,
         bonus_number=normalized.bonus_number,
         multiplier=normalized.multiplier,
+        jackpot=normalized.jackpot,
+        jackpot_change=normalized.jackpot_change,
+        cash_payout=normalized.cash_payout,
+        next_draw_text=normalized.next_draw_text,
+        next_draw_timezone=normalized.next_draw_timezone,
+        next_draw_relative=normalized.next_draw_relative,
+        secondary_draws=normalized.secondary_draws,
         source_url=normalized.source_url,
+        source_provider=normalized.source_provider,
+        notes=normalized.notes,
+        raw_payload=normalized.raw_payload,
+        confidence_score=normalized.confidence_score,
+        verification_status=normalized.verification_status,
+        needs_review=normalized.needs_review,
     )
-    _set_optional(row, "source_provider", normalized.source_provider)
-    _set_optional(row, "confidence_score", normalized.confidence_score)
-    _set_optional(row, "verification_status", normalized.verification_status)
-    _set_optional(row, "needs_review", False)
-    db.add(row)
+    db.add(draw)
     db.commit()
     return "created"
-
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-def _set_optional(obj, attr: str, value) -> None:
-    """Set an attribute only when the mapped model exposes that column."""
-    try:
-        setattr(obj, attr, value)
-    except AttributeError:
-        pass
